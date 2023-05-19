@@ -1,48 +1,103 @@
 import { useContext, useEffect } from "react";
 import DisposableContext from "../../Context/DisposableContext";
+import { Box, Button, TextField, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 export const DisposableCreate = () => {
   const { formValues, onChange, storeDisposable, errors, setErrors} = useContext(DisposableContext);
+
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
     setErrors({});
   }, []);
 
   return (
-    <div className="mt-12">
-      <form onSubmit={storeDisposable} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
-        <div className="space-y-6">
-          <div className="mb-4">
-            <label htmlFor="nombre" className="block mb-2 text-sm font-medium">Nombre</label>
-            <input name="name" value={formValues["name"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-            {errors.name && <span className="text-sm text-red-400">{ errors.name[0]}</span>}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="descripcion" className="block mb-2 text-sm font-medium">Descripción</label>
-            <input name="description" value={formValues["description"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-            {errors.description && <span className="text-sm text-red-400">{ errors.description[0]}</span>}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="precio" className="block mb-2 text-sm font-medium">Precio</label>
-            <input name="price" value={formValues["price"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-            {errors.price && <span className="text-sm text-red-400">{ errors.price[0]}</span>}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="proveedor" className="block mb-2 text-sm font-medium">Proveedor</label>
-            <input name="supplier" value={formValues["supplier"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-            {errors.supplier && <span className="text-sm text-red-400">{ errors.supplier[0]}</span>}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="stock" className="block mb-2 text-sm font-medium">Stock</label>
-            <input name="stock" value={formValues["stock"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-            {errors.stock && <span className="text-sm text-red-400">{ errors.stock[0]}</span>}
-          </div>
-        </div>
-        <div className="my-4">
-          <button className="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md">Guardar</button>
-        </div>
-      </form>
-    </div>
+    <Box m="20px">
+    <Header title="NUEVO DESCARTABLE" subtitle="Crear un nuevo descartable para el inventario" />
+
+    <form onSubmit={storeDisposable} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
+      <Box 
+         display="grid"
+         gap="30px"
+         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+         sx={{
+           "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+         }}
+      >
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Nombre"
+          name="name"
+          value={formValues["name"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 2" }}
+          error={errors.name !== undefined}
+          helperText={errors.name && errors.name[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Descripción"
+          name="description"
+          value={formValues["description"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 2" }}
+          error={errors.description !== undefined}
+          helperText={errors.description && errors.description[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Proveedor"
+          name="supplier"
+          value={formValues["supplier"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 2" }}
+          error={errors.supplier !== undefined}
+          helperText={errors.supplier && errors.supplier[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Precio"
+          name="price"
+          value={formValues["price"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 1" }}
+          error={errors.price !== undefined}
+          helperText={errors.price && errors.price[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Stock"
+          name="stock"
+          value={formValues["stock"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 1" }}
+          error={errors.stock !== undefined}
+          helperText={errors.stock && errors.stock[0]}
+        />
+      </Box>
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button type="submit" color="secondary" variant="contained">
+          Crear nuevo descartable
+        </Button>
+      </Box>
+    </form>
+  </Box>
+
   )
 }
