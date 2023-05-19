@@ -123,6 +123,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
               >
                 Data
               </Typography>
+              <Item
+                title="Categories"
+                to="/"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
               
             </Box>
           </Menu>

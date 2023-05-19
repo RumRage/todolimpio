@@ -1,7 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
+
+import { CategoryProvider } from './Context/CategoryContext';
+
+import { CategoryIndex } from './components/categories/CategoryIndex';
+import { CategoryCreate } from './components/categories/CategoryCreate';
+import { CategoryEdit } from './components/categories/CategoryEdit';
 
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -22,6 +28,18 @@ function App() {
              <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route
+              path="/categories/*"
+              element={
+                <CategoryProvider>
+                  <Routes>
+                    <Route path="/" element={<CategoryIndex />} />
+                    <Route path="/create" element={<CategoryCreate />} />
+                    <Route path="/:id/edit" element={<CategoryEdit />} />
+                  </Routes>
+                </CategoryProvider>
+              }
+            />
             </Routes>
           </main>
         </div>
