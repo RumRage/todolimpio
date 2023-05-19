@@ -7,6 +7,11 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import AirportShuttleOutlinedIcon from '@mui/icons-material/AirportShuttleOutlined';
+import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -71,7 +76,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                   ml="15px"
                 >
                   <Typography variant="h3" color={colors.grey[100]}>
-                    ADMINIS
+                    TODOLIMPIO
                   </Typography>
                   <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                     <MenuOutlinedIcon />
@@ -98,10 +103,10 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                     fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
                   >
-                    Ed Roh
+                    Clari
                   </Typography>
                   <Typography variant="h5" color={colors.greenAccent[500]}>
-                    VP Fancy Admin
+                   Sistema de gestión
                   </Typography>
                 </Box>
               </Box>
@@ -125,21 +130,21 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
               <Item
                 title="Categorias"
                 to="/categories"
-                icon={<HomeOutlinedIcon />}
+                icon={<CategoryOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
               <Item
                 title="Servicios"
                 to="/services"
-                icon={<HomeOutlinedIcon />}
+                icon={<AirportShuttleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
               <Item
                 title="Combos"
                 to="/combos"
-                icon={<HomeOutlinedIcon />}
+                icon={<SellOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
@@ -153,14 +158,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
               <Item
                 title="Productos"
                 to="/products"
-                icon={<HomeOutlinedIcon />}
+                icon={<StorefrontOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
               <Item
                 title="Descartables"
                 to="/disposables"
-                icon={<HomeOutlinedIcon />}
+                icon={<Inventory2OutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
