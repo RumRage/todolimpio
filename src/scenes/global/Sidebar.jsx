@@ -115,22 +115,56 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-  
+               <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Precios
+              </Typography>
+              <Item
+                title="Categorias"
+                to="/categories"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Servicios"
+                to="/services"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Combos"
+                to="/combos"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
                 sx={{ m: "15px 0 5px 20px" }}
               >
-                Data
+                Inventario
               </Typography>
               <Item
-                title="Categories"
-                to="/"
+                title="Productos"
+                to="/products"
                 icon={<HomeOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
-              
+              <Item
+                title="Descartables"
+                to="/disposables"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+             
             </Box>
           </Menu>
         </ProSidebar>

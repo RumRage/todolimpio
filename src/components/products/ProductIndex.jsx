@@ -1,65 +1,126 @@
 import { useEffect, useContext } from "react"
 import { Link } from "react-router-dom";
 import ProductContext from "../../Context/ProductContext";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { tokens } from "../../theme";
+import { useTheme } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import Header from "../../components/Header";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
 export const ProductIndex = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const { products, getProducts, deleteProduct } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
     }, [])
+
+    const columns = [
+        { field: "id", headerName: "Id", flex: 0.5 },
+        { field: "name", headerName: "Nombre", flex: 1 },
+        { field: "description", headerName: "Descripcion", flex: 1 },
+        { field: "price", headerName: "Precio", flex: 1 },
+        { field: "supplier", headerName: "Proveedor", flex: 1 },
+        { field: "stock", headerName: "Stock", flex: 1 },
+        {
+          field: "actions",
+          headerName: "Opciones",
+          flex: 1,
+          renderCell: (params) => (
+            <>
+              <Button
+              component={Link}
+              to={`/products/${params.row.id}/edit`}
+              variant="contained"
+              startIcon={<ModeEditOutlineOutlinedIcon />}
+              >
+            
+              Editar
+            </Button>
+              <Button 
+                variant="contained"
+                onClick={() => deleteProduct(params.row.id)}
+                startIcon={<DeleteIcon />}>
+                Eliminar
+              </Button>
+            </>
+          ),
+        },
+      ];
     
     return (
-        <div className="mt-12">
-           <div className="flex justify-end m-2 p-2">
-                <Link to="/products/create" className="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md">Nuevo producto</Link>
-            </div>
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Id
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Nombre
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Descripción
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Precio
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Proveedor
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Stock
-                            </th>
-                            <th scope="col" class="px-6 py-3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((product) => {
-                        return (
-                            <tr key={product.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td className="px-6 py-4">{product.id}</td>
-                                <td className="px-6 py-4">{product.name}</td>
-                                <td className="px-6 py-4">{product.description}</td>
-                                <td className="px-6 py-4">{product.price}</td>
-                                <td className="px-6 py-4">{product.supplier}</td>
-                                <td className="px-6 py-4">{product.stock}</td>
-                                <td className="px-6 py-4 space-x-2">
-                                 <Link to={`/products/${product.id}/edit`} className="px-4 py-2 bg-green-500 hover:bg-green-700 text-white rounded-md">Editar</Link>
-                                 <button onClick={() => deleteProduct(product.id)} className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md">Borrar</button>
-                                </td>
-                               
-                            </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <Box m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Header
+        title="PRODUCTOS"
+        subtitle="Listado de productos"
+      />
+      <Box>
+        <Button
+            component={Link}
+            to="/products/create"
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              textDecoration: "none",
+            }}
+          >
+            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+              Nuevo producto
+        </Button>
+      </Box>
+      </Box>
+      <Box
+        m="40px 0 0 0"
+        height="75vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          "& .name-column--cell": {
+            color: colors.greenAccent[300],
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: colors.primary[400],
+          },
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
+            backgroundColor: colors.blueAccent[700],
+          },
+          "& .MuiCheckbox-root": {
+            color: `${colors.greenAccent[200]} !important`,
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
+        }}
+      >
+        <DataGrid
+          rows={products}
+          columns={columns}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          pageSize={5}
+          disableSelectionOnClick
+        />
+     </Box>
+    </Box>
+        
         )
     }
 
