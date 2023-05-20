@@ -190,9 +190,6 @@ export const ComboProvider = ({ children }) => {
   };
 
   const deleteCombo = async (id) => {
-    if (!window.confirm("Estás seguro?")) {
-      return;
-    }
     await axios.delete("combos/" + id);
     getCombos();
   };
