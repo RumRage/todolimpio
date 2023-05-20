@@ -133,19 +133,6 @@ export const tokens = (mode) => ({
           800: "#c3c6fd",
           900: "#e1e2fe",
         },
-        button: {
-          backgroundColor: "#FED8B1",
-          color: "#666666",
-          "&:hover": {
-            backgroundColor: "#A5917B",
-          },
-        },
-        gridColumn: {
-          backgroundColor: "#4C4A45",
-          color: "#727681",
-          fontSize: "16px",
-          fontWeight: "bold",
-        },
       }),
 });
 
