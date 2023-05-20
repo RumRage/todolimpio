@@ -72,9 +72,6 @@ export const DisposableProvider = ({ children }) => {
 }
 
   const deleteDisposable = async (id) => {
-    if(!window.confirm("Estas seguro?")){
-      return;
-    }
     await axios.delete("disposables/" + id);
     getDisposables();
     }

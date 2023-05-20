@@ -7,8 +7,8 @@ import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
 import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
-import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import AlertDialog from "../../components/AlertDialog";
 
 export const ProductIndex = () => {
     const theme = useTheme();
@@ -17,7 +17,11 @@ export const ProductIndex = () => {
     const { products, getProducts, deleteProduct } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
-    }, [])
+    }, []);
+
+    const handleDelete = (id) => {
+      deleteProduct(id);
+    };
 
     const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -46,19 +50,8 @@ export const ProductIndex = () => {
             >
               <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
             </Button>
-              <Button 
-                variant="contained"
-                onClick={() => deleteProduct(params.row.id)}
-                sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                  "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                  },
-                }} 
-              >
-                <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-              </Button>
+            
+            <AlertDialog onDelete={() => handleDelete(params.row.id)} />
             </>
           ),
         },

@@ -72,9 +72,6 @@ export const ProductProvider = ({ children }) => {
 }
 
   const deleteProduct = async (id) => {
-    if(!window.confirm("Are you sure?")){
-      return;
-    }
     await axios.delete("products/" + id);
     getProducts();
     }
