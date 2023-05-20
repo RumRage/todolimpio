@@ -8,6 +8,7 @@ import { ProductProvider } from './Context/ProductContext';
 import { DisposableProvider } from './Context/DisposableContext';
 import { ServiceProvider } from './Context/ServiceContext';
 import { ComboProvider } from './Context/ComboContext';
+import { ScheduleProvider } from './Context/ScheduleContext';
 
 import { CategoryIndex } from './components/categories/CategoryIndex';
 import { CategoryCreate } from './components/categories/CategoryCreate';
@@ -28,6 +29,10 @@ import { ServiceEdit } from './components/services/ServiceEdit';
 import { ComboIndex } from './components/combos/ComboIndex';
 import { ComboCreate } from './components/combos/ComboCreate';
 import { ComboEdit } from './components/combos/ComboEdit';
+
+import { ScheduleIndex } from './components/schedules/ScheduleIndex';
+import { ScheduleCreate } from './components/schedules/ScheduleCreate';
+import { ScheduleEdit } from './components/schedules/ScheduleEdit';
 
 
 import Topbar from "./scenes/global/Topbar";
@@ -107,6 +112,18 @@ function App() {
                     <Route path="/:id/edit" element={<ComboEdit />} />
                   </Routes>
                 </ComboProvider>
+              }
+            />
+            <Route
+              path="/schedules/*"
+              element={
+                <ScheduleProvider>
+                  <Routes>
+                    <Route path="/" element={<ScheduleIndex />} />
+                    <Route path="/create" element={<ScheduleCreate />} />
+                    <Route path="/:id/edit" element={<ScheduleEdit />} />
+                  </Routes>
+                </ScheduleProvider>
               }
             />
             </Routes>

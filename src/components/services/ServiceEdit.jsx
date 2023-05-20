@@ -1,6 +1,10 @@
 import { useContext, useEffect } from "react";
 import ServiceContext from "../../Context/ServiceContext";
-import { useParams } from "react-router-dom"; 
+import { useParams } from "react-router-dom";
+import { Box, Button, TextField, FormControl, InputLabel, Select, MenuItem, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const ServiceEdit = () => {
   const { formValues, onChange, errors, setErrors, service, getService, updateService, categories, setCategories } = useContext(ServiceContext);
@@ -9,47 +13,71 @@ export const ServiceEdit = () => {
   getService(id);
   setErrors({});
   }, [])
+
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
-    <div className="mt-12">
+    <Box m="20px">
+    <Header title="EDITAR SERVICIO" subtitle="Editar un servicio existente" />
+
     <form onSubmit={updateService} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
-      <div className="space-y-6">
-        <div className="mb-4">
-          <label htmlFor="nombre" className="block mb-2 text-sm font-medium">Nombre</label>
-          <input name="name" value={formValues["name"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-          {errors.name && <span className="text-sm text-red-400">{ errors.name[0]}</span>}
-        </div>
-        <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium">Categoria</label>
-            <select
+      <Box 
+        display="grid"
+        gap="30px"
+        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+        sx={{
+          "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+        }}
+      >
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Nombre"
+          name="name"
+          value={formValues["name"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 4" }}
+          error={errors.name !== undefined}
+          helperText={errors.name && errors.name[0]}
+        />
+        <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 4" }}>
+          <InputLabel>Categoría</InputLabel>
+            <Select
               name="category_id"
               value={formValues.category_id}
               onChange={onChange}
-              className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+              error={errors.category_id !== undefined}
+              label="Categoría"
             >
-              <option value="">Seleccione una categoría</option>
+              <MenuItem value="">Seleccione una categoría</MenuItem>
               {categories.map(category => (
-                <option
-                  key={category.id}
-                  value={category.id}
-                  defaultValue={category.id === formValues.category_id ? "selected" : undefined} // Establece el atributo "defaultValue" si es la categoría seleccionada
-                >
-                  {category.name}
-                </option>
+                <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
               ))}
-            </select>
-
-            {errors.category_id && <span className="text-sm text-red-400">{ errors.category_id[0]}</span>}
-          </div>
-        <div className="mb-4">
-          <label htmlFor="precio" className="block mb-2 text-sm font-medium">Precio</label>
-          <input name="price" value={formValues["price"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-          {errors.price && <span className="text-sm text-red-400">{ errors.price[0]}</span>}
-        </div>
-      </div>
-      <div className="my-4">
-        <button className="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md">Actualizar</button>
-      </div>
+            </Select>
+          {errors.category_id && <span className="text-sm text-red-400">{errors.category_id[0]}</span>}
+        </FormControl>
+        <TextField
+          fullWidth
+          variant="filled"
+          type="number"
+          label="Precio"
+          name="price"
+          value={formValues["price"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 4" }}
+          error={errors.price !== undefined}
+          helperText={errors.price && errors.price[0]}
+        />
+      </Box>
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button type="submit" color="secondary" variant="contained">
+          Actualizar
+        </Button>
+      </Box>
     </form>
-  </div>
+  </Box>
   )
 }

@@ -50,10 +50,10 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
             padding: "5px 35px 5px 20px !important",
           },
           "& .pro-inner-item:hover": {
-            color: "#868dfb !important",
+            color: `${theme.palette.mode === 'dark' ? '#D1B496' : '#AE5671'} !important`, // Tan | Manually changed #868dfb
           },
           "& .pro-menu-item.active": {
-            color: "#6870fa !important",
+            color: `${theme.palette.mode === 'dark' ? '#786D60' : '#BE7289'} !important`, // Dark Silver | Manually changed #6870fa 
           },
         }}
       >
@@ -92,7 +92,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                     alt="profile-user"
                     width="100px"
                     height="100px"
-                    src={`../../assets/user.png`}
+                    src={theme.palette.mode === 'light' ? '../../assets/light.png' : '../../assets/dark.png'}
                     style={{ cursor: "pointer", borderRadius: "50%" }}
                   />
                 </Box>
@@ -117,6 +117,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 title="Dashboard"
                 to="/"
                 icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+               <Item
+                title="Agenda"
+                to="/schedules"
+                icon={<Inventory2OutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
@@ -169,6 +176,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
+             
              
             </Box>
           </Menu>

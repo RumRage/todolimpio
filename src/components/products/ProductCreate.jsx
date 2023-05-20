@@ -4,7 +4,7 @@ import { Box, Button, TextField, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+ 
 export const ProductCreate = () => {
   const { formValues, onChange, storeProduct, errors, setErrors} = useContext(ProductContext);
 
@@ -68,7 +68,7 @@ export const ProductCreate = () => {
           <TextField
             fullWidth
             variant="filled"
-            type="text"
+            type="number"
             label="Precio"
             name="price"
             value={formValues["price"]}
@@ -80,7 +80,7 @@ export const ProductCreate = () => {
           <TextField
             fullWidth
             variant="filled"
-            type="text"
+            type="number"
             label="Stock"
             name="stock"
             value={formValues["stock"]}

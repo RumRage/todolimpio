@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react"
 import { Link } from "react-router-dom";
-import ComboContext from "../../Context/ComboContext";
+import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
@@ -10,53 +10,81 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
-export const ComboIndex = () => {
+
+export const ScheduleIndex = () => {
+    const { schedules, getSchedules, deleteSchedule, paymentOptions } = useContext(ScheduleContext);
+    useEffect(() => {
+    getSchedules();
+    }, [])
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { combos, getCombos, deleteCombo } = useContext(ComboContext);
-    useEffect(() => {
-    getCombos();
-    }, [])
 
-    const columns = [
+      const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
         { field: "name", headerName: "Nombre", flex: 1 },
+        { field: "tel", headerName: "Telefono", flex: 1 },
+        { field: "address", headerName: "Direccion", flex: 1 },
+        { field: "date_time", headerName: "Fecha", flex: 1 },
         {
-          field: "service_id",
-          headerName: "Servicio",
-          flex: 1,
-          valueGetter: (params) => {
-            const combo = params.row;
-            return combo.services.map((service) => `${service.name} ($${service.price})`).join(", ");
+            field: "combo_id",
+            headerName: "Servicio",
+            flex: 1,
+            valueGetter: (params) => {
+              const schedule = params.row;
+              return schedule.combos.map((combo) => combo.name).join(", ");
+            },
           },
-        },
-        { field: "price", headerName: "Precio", flex: 1 },
-        { field: "discount", headerName: "Descuento", flex: 1 },
-        { field: "total_price", headerName: "Precio total", flex: 1 },
+        {
+            field: "price",
+            headerName: "Precio",
+            flex: 1,
+            renderCell: (params) => {
+              const { price, discount, total_price } = params.row;
+              return (
+                <div>
+                  <div>Precio: {price}</div>
+                  <div>Descuento: {discount}</div>
+                  <div>Precio total: {total_price}</div>
+                </div>
+              );
+            },
+          }, 
+          {
+            field: "payments",
+            headerName: "Metodo de pago",
+            flex: 1,
+            valueGetter: (params) => {
+              const { payments } = params.row;
+              return paymentOptions[payments];
+            },
+          },
+        { field: "status", headerName: "Estado", flex: 0.5 },
         {
           field: "actions",
           headerName: "Opciones",
-          flex: 1,
+          flex: 1.5,
           renderCell: (params) => (
             <>
               <Button
-              component={Link}
-              to={`/combos/${params.row.id}/edit`}
-              variant="contained"
-              sx={{ 
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                "&:hover": {
-                  backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                },
-              }} 
-            >
-              <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-            </Button>
-              <Button 
+                component={Link}
+                to={`/schedules/${params.row.id}/edit`}
                 variant="contained"
-                onClick={() => deleteCombo(params.row.id)}
+                sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                  },
+                }} 
+              >
+                <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={() => deleteSchedule(params.row.id)}
                 sx={{ 
                   backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
                   color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
@@ -72,17 +100,18 @@ export const ComboIndex = () => {
         },
     ];
     
+    
     return (
         <Box m="20px">
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Header
-                title="COMBOS"
-                subtitle="Listado de combos"
+                title="AGENDA"
+                subtitle="Agenda de servicios de Todolimpio MDQ"
             />
             <Box>
                 <Button
                     component={Link}
-                    to="/combos/create"
+                    to="/schedules/create"
                     sx={{
                       backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
                       color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
@@ -95,7 +124,7 @@ export const ComboIndex = () => {
                     },
                   }}
                   >
-                      Nuevo combo
+                      Agendar servicio
                       <AddOutlinedIcon sx={{ ml: "10px" }} />
                 </Button>
             </Box>
@@ -138,7 +167,7 @@ export const ComboIndex = () => {
             }}
             >
             <DataGrid
-                rows={combos}
+                rows={schedules}
                 columns={columns}
                 components={{
                   Toolbar: GridToolbar,
@@ -148,7 +177,6 @@ export const ComboIndex = () => {
             />
             </Box>
         </Box>
-        
+       
         )
     }
-

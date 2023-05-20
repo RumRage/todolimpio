@@ -6,7 +6,7 @@ import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import UnarchiveOutlinedIcon from '@mui/icons-material/UnarchiveOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
@@ -37,16 +37,28 @@ export const DisposableIndex = () => {
               component={Link}
               to={`/disposables/${params.row.id}/edit`}
               variant="contained"
-              startIcon={<ModeEditOutlineOutlinedIcon />}
-              >
-            
-              Editar
+              sx={{ 
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                "&:hover": {
+                  backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                },
+              }} 
+            >
+              <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
             </Button>
               <Button 
                 variant="contained"
                 onClick={() => deleteDisposable(params.row.id)}
-                startIcon={<DeleteIcon />}>
-                Eliminar
+                sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                  },
+                }} 
+              >
+                <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
             </>
           ),
@@ -65,50 +77,58 @@ export const DisposableIndex = () => {
                         component={Link}
                         to="/disposables/create"
                         sx={{
-                          backgroundColor: colors.blueAccent[700],
-                          color: colors.grey[100],
+                          backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                          color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                           fontSize: "14px",
                           fontWeight: "bold",
                           padding: "10px 20px",
                           textDecoration: "none",
-                        }}
+                          "&:hover": {
+                            backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                        },
+                      }}
                       >
-                        <DownloadOutlinedIcon sx={{ mr: "10px" }} />
                           Nuevo descartable
+                          <UnarchiveOutlinedIcon sx={{ ml: "10px" }} />
                     </Button>
                 </Box>
             </Box>
             <Box
-                m="40px 0 0 0"
-                height="75vh"
-                sx={{
-                  "& .MuiDataGrid-root": {
-                    border: "none",
-                  },
-                  "& .MuiDataGrid-cell": {
-                    borderBottom: "none",
-                  },
-                  "& .name-column--cell": {
-                    color: colors.greenAccent[300],
-                  },
-                  "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: colors.blueAccent[700],
-                    borderBottom: "none",
-                  },
-                  "& .MuiDataGrid-virtualScroller": {
-                    backgroundColor: colors.primary[400],
-                  },
-                  "& .MuiDataGrid-footerContainer": {
-                    borderTop: "none",
-                    backgroundColor: colors.blueAccent[700],
-                  },
-                  "& .MuiCheckbox-root": {
-                    color: `${colors.greenAccent[200]} !important`,
-                  },
-                  "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                    color: `${colors.grey[100]} !important`,
-                  },
-                }}
+            m="40px 0 0 0"
+            height="75vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .name-column--cell": {
+                color: colors.greenAccent[300],
+              },
+              
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                borderBottom: "none",
+                fontSize: "16px", 
+                fontWeight: "bold", 
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: colors.primary[400],
+              },
+              "& .MuiDataGrid-footerContainer": {
+                borderTop: "none",
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
+                color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
+              },
+              "& .MuiCheckbox-root": {
+                color: `${colors.greenAccent[200]} !important`,
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
+              },
+            }}
                 >
                 <DataGrid
                     rows={disposables}
