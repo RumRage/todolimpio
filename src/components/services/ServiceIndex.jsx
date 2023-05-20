@@ -6,7 +6,7 @@ import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
@@ -55,7 +55,7 @@ export const ServiceIndex = () => {
         <Box m="20px">
     <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
-            title="Servicios"
+            title="SERVICIOS"
             subtitle="Listado de servicios"
         />
         <Box>
@@ -71,8 +71,9 @@ export const ServiceIndex = () => {
                   textDecoration: "none",
                 }}
               >
-                <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+                
                   Nuevo servicio
+                  <AddOutlinedIcon sx={{ ml: "10px" }} />
             </Button>
         </Box>
     </Box>

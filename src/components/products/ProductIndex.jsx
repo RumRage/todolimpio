@@ -6,7 +6,7 @@ import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
@@ -72,8 +72,8 @@ export const ProductIndex = () => {
                           textDecoration: "none",
                         }}
                       >
-                        <DownloadOutlinedIcon sx={{ mr: "10px" }} />
                           Nuevo producto
+                          <AddBusinessOutlinedIcon sx={{ ml: "10px" }} />
                     </Button>
                 </Box>
             </Box>

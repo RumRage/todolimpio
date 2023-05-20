@@ -1,13 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import ComboContext from "../../Context/ComboContext";
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import { useParams } from "react-router-dom";
+import { Box, Button, TextField, FormControl, InputLabel, Select, MenuItem, ListItemText, Checkbox, useTheme, OutlinedInput } from "@mui/material";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const ComboEdit = () => {
 const { formValues, onChange, errors, setErrors, getCombo, updateCombo, services, MenuProps } = useContext(ComboContext);
@@ -23,72 +20,109 @@ useEffect(() => {
   fetchCombo();
 }, [id]); 
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
 return (
-<div className="mt-12">
-<form onSubmit={updateCombo} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
-<div className="space-y-6">
-<div className="mb-4">
-<label htmlFor="nombre" className="block mb-2 text-sm font-medium">Nombre</label>
-<input name="name" value={formValues["name"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-{errors.name && <span className="text-sm text-red-400">{errors.name[0]}</span>}
-</div>
+  <Box m="20px">
+    <Header title="EDITAR COMBO" subtitle="Editar un combo existente" />
 
-<div className="mb-4">
-<FormControl sx={{ m: 1, width: 300 }}>
-<InputLabel id="demo-multiple-checkbox-label">Servicios</InputLabel>
-<Select
-labelId="demo-multiple-checkbox-label"
-id="demo-multiple-checkbox"
-name="service_id"
-multiple
-value={selectedServiceIds}
-onChange={onChange}
-input={<OutlinedInput label="Servicios" />}
-renderValue={(selected) =>
-selected
-.map((value) => {
-const service = services.find((service) => service.id === value);
-return service ? service.name : "";
-})
-.join(", ")
-}
-MenuProps={MenuProps}
->
-<MenuItem value="">
-<em>Selecciona un servicio</em>
-</MenuItem>
-{services.map((service) => (
-<MenuItem key={service.id} value={service.id}>
-<Checkbox checked={(selectedServiceIds || []).includes(service.id)} />
-<ListItemText primary={service.name} />
-</MenuItem>
-))}
-</Select>
-
-{errors.service_id && <span className="text-sm text-red-400">{errors.service_id[0]}</span>}
-</FormControl>
-</div>
-<div className="mb-4">
-<label htmlFor="precio" className="block mb-2 text-sm font-medium">Precio</label>
-<input name="price" value={formValues["price"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-{errors.price && <span className="text-sm text-red-400">{errors.price[0]}</span>}
-</div>
-<div className="mb-4">
-<label htmlFor="descuento" className="block mb-2 text-sm font-medium">Descuento</label>
-<input name="discount" value={formValues["discount"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-{errors.discount && <span className="text-sm text-red-400">{errors.discount[0]}</span>}
-</div>
-<div className="mb-4">
-<label htmlFor="total" className="block mb-2 text-sm font-medium">Total</label>
-<input name="total_price" value={formValues["total_price"]} onChange={onChange} className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2" />
-{errors.total_price && <span className="text-sm text-red-400">{errors.total_price[0]}</span>}
-</div>
-</div>
-<div className="my-4">
-<button className="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-md">Actualizar</button>
-</div>
-</form>
-</div>
-);
+      <form onSubmit={updateCombo} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
+        <Box 
+          display="grid"
+          gap="30px"
+          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+          sx={{
+            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+          }}
+        >
+          <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Nombre"
+          name="name"
+          value={formValues["name"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 4" }}
+          error={errors.name !== undefined}
+          helperText={errors.name && errors.name[0]}
+        />
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="demo-multiple-checkbox-label">Servicios</InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              name="service_id"
+              multiple
+              value={formValues.service_id}
+              onChange={onChange}
+              input={<OutlinedInput label="Servicios" />}
+              renderValue={(selected) =>
+                selected
+                  .map((value) => {
+                    const service = services.find((service) => service.id === value);
+                    return service ? service.name : "";
+                  })
+                  .join(", ")
+              }
+            >
+            <MenuItem value="">
+              <em>Selecciona un servicio</em>
+            </MenuItem>
+            {services.map((service) => (
+              <MenuItem key={service.id} value={service.id}>
+                <Checkbox checked={formValues.service_id.includes(service.id)} />
+                <ListItemText primary={service.name} />
+              </MenuItem>
+            ))}
+          </Select>
+        {errors.service_id && <span className="text-sm text-red-400">{errors.service_id[0]}</span>}
+        </FormControl>
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Precio"
+          name="price"
+          value={formValues["price"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 1" }}
+          error={errors.price !== undefined}
+          helperText={errors.price && errors.price[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Descuento"
+          name="discount"
+          value={formValues["discount"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 1" }}
+          error={errors.discount !== undefined}
+          helperText={errors.discount && errors.discount[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Precio total"
+          name="total_price"
+          value={formValues["total_price"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 1" }}
+          error={errors.total_price !== undefined}
+          helperText={errors.total_price && errors.total_price[0]}
+        />
+      </Box>
+        <Box display="flex" justifyContent="end" mt="20px">
+          <Button type="submit" color="secondary" variant="contained">
+            Actualizar
+          </Button>
+        </Box>
+      </form>
+    </Box>
+  );
 };

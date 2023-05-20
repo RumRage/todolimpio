@@ -6,10 +6,9 @@ import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-
 
 export const ComboIndex = () => {
     const theme = useTheme();
@@ -81,8 +80,8 @@ export const ComboIndex = () => {
                       textDecoration: "none",
                     }}
                   >
-                    <DownloadOutlinedIcon sx={{ mr: "10px" }} />
                       Nuevo combo
+                      <AddOutlinedIcon sx={{ ml: "10px" }} />
                 </Button>
             </Box>
         </Box>
