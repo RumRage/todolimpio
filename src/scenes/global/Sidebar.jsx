@@ -92,7 +92,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                     alt="profile-user"
                     width="100px"
                     height="100px"
-                    src={`../../assets/user.png`}
+                    src={theme.palette.mode === 'light' ? '../../assets/light.png' : '../../assets/dark.png'}
                     style={{ cursor: "pointer", borderRadius: "50%" }}
                   />
                 </Box>
