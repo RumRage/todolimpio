@@ -9,6 +9,7 @@ import CategoryContext from "../../Context/CategoryContext";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import AlertDialog from "../../components/AlertDialog";
 
 
 export const CategoryIndex = () => {
@@ -20,6 +21,9 @@ export const CategoryIndex = () => {
     getCategories();
   }, [])
 
+  const handleDelete = (id) => {
+    deleteCategory(id);
+  };
  
   const columns = [
     { field: "id", headerName: "Id", flex: 0.5 },
@@ -44,19 +48,8 @@ export const CategoryIndex = () => {
           >
         <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
         </Button>
-          <Button 
-            variant="contained"
-            onClick={() => deleteCategory(params.row.id)}
-            sx={{ 
-              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-              color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-              "&:hover": {
-                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-              },
-            }} 
-          >
-            <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-          </Button>
+
+        <AlertDialog onDelete={() => handleDelete(params.row.id)} />
         </>
       ),
     },

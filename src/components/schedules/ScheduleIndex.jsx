@@ -8,7 +8,7 @@ import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import AlertDialog from "./AlertDialog";
+import AlertDialog from "../../components/AlertDialog";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, deleteSchedule, paymentOptions } = useContext(ScheduleContext);

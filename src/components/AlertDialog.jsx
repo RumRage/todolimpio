@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { tokens } from "../../theme";
+import { tokens } from "../theme";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Alert, Stack, Typography, Divider, useTheme } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 

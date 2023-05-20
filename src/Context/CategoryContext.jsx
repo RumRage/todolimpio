@@ -66,9 +66,6 @@ export const CategoryProvider = ({ children }) => {
     }
 
     const deleteCategory = async (id) => {
-        if(!window.confirm("Estás seguro?")){
-            return;
-        }
         await axios.delete("categories/" + id);
         getCategories();
     }
