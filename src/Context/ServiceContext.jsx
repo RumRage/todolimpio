@@ -87,9 +87,6 @@ export const ServiceProvider = ({ children }) => {
 }
 
   const deleteService = async (id) => {
-    if(!window.confirm("Estás seguro?")){
-      return;
-    }
     await axios.delete("services/" + id);
     getServices();
     }
