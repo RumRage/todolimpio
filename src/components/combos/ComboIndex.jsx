@@ -44,16 +44,28 @@ export const ComboIndex = () => {
               component={Link}
               to={`/combos/${params.row.id}/edit`}
               variant="contained"
-              startIcon={<ModeEditOutlineOutlinedIcon />}
-              >
-            
-              Editar
+              sx={{ 
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                "&:hover": {
+                  backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                },
+              }} 
+            >
+              <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
             </Button>
               <Button 
                 variant="contained"
                 onClick={() => deleteCombo(params.row.id)}
-                startIcon={<DeleteIcon />}>
-                Eliminar
+                sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                  },
+                }} 
+              >
+                <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
             </>
           ),
@@ -72,13 +84,16 @@ export const ComboIndex = () => {
                     component={Link}
                     to="/combos/create"
                     sx={{
-                      backgroundColor: colors.blueAccent[700],
-                      color: colors.grey[100],
+                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                      color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                       fontSize: "14px",
                       fontWeight: "bold",
                       padding: "10px 20px",
                       textDecoration: "none",
-                    }}
+                      "&:hover": {
+                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                    },
+                  }}
                   >
                       Nuevo combo
                       <AddOutlinedIcon sx={{ ml: "10px" }} />
@@ -98,16 +113,21 @@ export const ComboIndex = () => {
               "& .name-column--cell": {
                 color: colors.greenAccent[300],
               },
+              
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
+                fontSize: "16px", 
+                fontWeight: "bold", 
               },
               "& .MuiDataGrid-virtualScroller": {
                 backgroundColor: colors.primary[400],
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
+                color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
               },
               "& .MuiCheckbox-root": {
                 color: `${colors.greenAccent[200]} !important`,
