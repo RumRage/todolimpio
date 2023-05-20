@@ -120,6 +120,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
+               <Item
+                title="Agenda"
+                to="/schedules"
+                icon={<Inventory2OutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
                <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -169,6 +176,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
+             
              
             </Box>
           </Menu>
