@@ -12,7 +12,7 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 
 
 export const ScheduleIndex = () => {
-    const { schedules, getSchedules, deleteSchedule } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, [])
@@ -20,11 +20,6 @@ export const ScheduleIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const paymentOptions = {
-        1: 'A confirmar',
-        2: 'Efectivo',
-        3: 'Transferencia',
-      };
 
       const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },

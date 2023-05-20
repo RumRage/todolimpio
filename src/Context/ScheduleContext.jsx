@@ -38,6 +38,12 @@ export const ScheduleProvider = ({ children }) => {
     },
   };
 
+  const paymentOptions = {
+    1: 'A confirmar',
+    2: 'Efectivo',
+    3: 'Transferencia',
+  };
+
   const getSchedules = async () => {
     const response = await axios.get("schedules?with=combos"); // Eager Loading
     setSchedules(response.data.data);
@@ -228,6 +234,7 @@ export const ScheduleProvider = ({ children }) => {
       setCombos,
       MenuProps,
       payments,
+      paymentOptions,
     }}>{children}
     </ScheduleContext.Provider>
   );
