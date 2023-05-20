@@ -6,7 +6,7 @@ import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
 import CategoryContext from "../../Context/CategoryContext";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 
@@ -34,16 +34,28 @@ export const CategoryIndex = () => {
           component={Link}
           to={`/categories/${params.row.id}/edit`}
           variant="contained"
-          startIcon={<ModeEditOutlineOutlinedIcon />}
+          sx={{ 
+            backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+            color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+            "&:hover": {
+              backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+            },
+          }} // Cambia el color de fondo del botón
           >
-        
-          Editar
+        <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
         </Button>
           <Button 
             variant="contained"
             onClick={() => deleteCategory(params.row.id)}
-            startIcon={<DeleteIcon />}>
-            Eliminar
+            sx={{ 
+              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+              color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+              "&:hover": {
+                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+              },
+            }} // Cambia el color de fondo del botón
+          >
+            <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
           </Button>
         </>
       ),
@@ -62,51 +74,59 @@ export const CategoryIndex = () => {
             component={Link}
             to="/categories/create"
             sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
+              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+              color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
               textDecoration: "none",
+              "&:hover": {
+                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
             }}
+          }
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
               Nueva categoria
+              <AddOutlinedIcon sx={{ ml: "10px" }} />
         </Button>
       </Box>
       </Box>
       <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
-        }}
-      >
+            m="40px 0 0 0"
+            height="75vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .name-column--cell": {
+                color: colors.greenAccent[300],
+              },
+              
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                borderBottom: "none",
+                fontSize: "16px", // Tamaño de la letra más grande
+                fontWeight: "bold", // Letra en negrita
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: colors.primary[400],
+              },
+              "& .MuiDataGrid-footerContainer": {
+                borderTop: "none",
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
+              },
+              "& .MuiCheckbox-root": {
+                color: `${colors.greenAccent[200]} !important`,
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${colors.grey[100]} !important`,
+              },
+            }}
+            >
         <DataGrid
           rows={categories}
           columns={columns}

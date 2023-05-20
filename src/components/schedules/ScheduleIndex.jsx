@@ -144,7 +144,7 @@ export const ScheduleIndex = () => {
               },
               
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.crayola[500],
                 color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
                 fontSize: "16px", // Tamaño de la letra más grande

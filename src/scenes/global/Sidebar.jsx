@@ -50,10 +50,10 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
             padding: "5px 35px 5px 20px !important",
           },
           "& .pro-inner-item:hover": {
-            color: "#786D60 !important", // Grullo Manually changed ##868dfb
+            color: `${theme.palette.mode === 'dark' ? '#D1B496' : '#AE5671'} !important`, // Tan | Manually changed #868dfb
           },
           "& .pro-menu-item.active": {
-            color: "#D1B496 !important", // Tan Manually changed #6870fa
+            color: `${theme.palette.mode === 'dark' ? '#786D60' : '#BE7289'} !important`, // Dark Silver | Manually changed #6870fa 
           },
         }}
       >
