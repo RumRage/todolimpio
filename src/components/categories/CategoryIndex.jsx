@@ -35,12 +35,12 @@ export const CategoryIndex = () => {
           to={`/categories/${params.row.id}/edit`}
           variant="contained"
           sx={{ 
-            backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+            backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
             color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
             "&:hover": {
-              backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+              backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
             },
-          }} // Cambia el color de fondo del botón
+          }} 
           >
         <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
         </Button>
@@ -48,12 +48,12 @@ export const CategoryIndex = () => {
             variant="contained"
             onClick={() => deleteCategory(params.row.id)}
             sx={{ 
-              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
               color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
               "&:hover": {
-                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
               },
-            }} // Cambia el color de fondo del botón
+            }} 
           >
             <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
           </Button>
@@ -74,14 +74,14 @@ export const CategoryIndex = () => {
             component={Link}
             to="/categories/create"
             sx={{
-              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
               color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
               textDecoration: "none",
               "&:hover": {
-                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
             }}
           }
           >
@@ -105,7 +105,7 @@ export const CategoryIndex = () => {
               },
               
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
                 color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
                 fontSize: "16px", // Tamaño de la letra más grande
@@ -116,7 +116,7 @@ export const CategoryIndex = () => {
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
                 color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
               },
               "& .MuiCheckbox-root": {

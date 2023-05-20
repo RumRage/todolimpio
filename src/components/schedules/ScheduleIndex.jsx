@@ -50,7 +50,7 @@ export const ScheduleIndex = () => {
                 </div>
               );
             },
-          },
+          }, 
           {
             field: "payments",
             headerName: "Metodo de pago",
@@ -77,7 +77,7 @@ export const ScheduleIndex = () => {
                   "&:hover": {
                     backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
                   },
-                }} // Cambia el color de fondo del botón
+                }} 
               >
                 <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
