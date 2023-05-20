@@ -72,10 +72,10 @@ export const ScheduleIndex = () => {
                 to={`/schedules/${params.row.id}/edit`}
                 variant="contained"
                 sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
                   color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                   "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
                   },
                 }} // Cambia el color de fondo del botón
               >
@@ -86,10 +86,10 @@ export const ScheduleIndex = () => {
                 variant="contained"
                 onClick={() => deleteSchedule(params.row.id)}
                 sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
                   color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                   "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
                   },
                 }} // Cambia el color de fondo del botón
               >
@@ -113,14 +113,14 @@ export const ScheduleIndex = () => {
                     component={Link}
                     to="/schedules/create"
                     sx={{
-                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
                       color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                       fontSize: "14px",
                       fontWeight: "bold",
                       padding: "10px 20px",
                       textDecoration: "none",
                       "&:hover": {
-                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
                     }}
                   }
                   >
@@ -144,7 +144,7 @@ export const ScheduleIndex = () => {
               },
               
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.crayola[500],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
                 color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
                 fontSize: "16px", // Tamaño de la letra más grande
@@ -155,7 +155,7 @@ export const ScheduleIndex = () => {
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
                 color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
               },
               "& .MuiCheckbox-root": {
