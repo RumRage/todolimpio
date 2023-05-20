@@ -60,7 +60,7 @@ export const ServiceCreate = () => {
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Precio"
           name="price"
           value={formValues["price"]}

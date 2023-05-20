@@ -69,7 +69,7 @@ export const DisposableCreate = () => {
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Precio"
           name="price"
           value={formValues["price"]}
@@ -81,7 +81,7 @@ export const DisposableCreate = () => {
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Stock"
           name="stock"
           value={formValues["stock"]}

@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import ScheduleContext from "../../Context/ScheduleContext";
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TextField } from '@mui/material';
-
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { tokens } from "../../theme";
+import { Box, Button, useTheme, TextField, MenuItem, FormControl, ListItemText, Select, Checkbox, InputLabel, OutlinedInput } from "@mui/material";
+import Header from "../../components/Header";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const ScheduleCreate = () => {
 const { formValues, onChange, storeSchedule, errors, setErrors, combos, setCombos, MenuProps, payments } = useContext(ScheduleContext);

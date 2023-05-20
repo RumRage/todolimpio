@@ -83,7 +83,7 @@ return (
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Precio"
           name="price"
           value={formValues["price"]}
@@ -95,7 +95,7 @@ return (
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Descuento"
           name="discount"
           value={formValues["discount"]}
@@ -107,7 +107,7 @@ return (
         <TextField
           fullWidth
           variant="filled"
-          type="text"
+          type="number"
           label="Precio total"
           name="total_price"
           value={formValues["total_price"]}
