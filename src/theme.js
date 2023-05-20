@@ -7,7 +7,7 @@ import { createTheme } from "@mui/material/styles";
 // color design tokens export
 export const tokens = (mode) => ({
   ...(mode === "dark"
-    ? {
+    ? { 
         grey: {
           100: "#e0e0e0",
           200: "#c2c2c2",
@@ -17,25 +17,25 @@ export const tokens = (mode) => ({
           600: "#525252",
           700: "#3d3d3d",
           800: "#292929",
-          900: "#141414",
+          900: "#141414", 
         },
         primary: {
           100: "#d0d1d5",
           200: "#a1a4ab",
           300: "#727681",
-          400: "#1F2A40",
-          500: "#141b2d",
+          400: "#4C4A45", //Quartz Manually changed #1F2A40
+          500: "#1F262A", //Dark Gunmetal Manually changed #141b2d
           600: "#101624",
           700: "#0c101b",
           800: "#080b12",
           900: "#040509",
         },
         greenAccent: {
-          100: "#dbf5ee",
-          200: "#b7ebde",
-          300: "#94e2cd",
-          400: "#70d8bd",
-          500: "#4cceac",
+          100: "#141414", // Grey Manually changed #dbf5ee
+          200: "#141414", // Grey Manually changed #b7ebde
+          300: "#141414", // Grey Manually changed #94e2cd
+          400: "#D1B496", // Tan Manually changed #70d8bd
+          500: "#A5917B", // Dark Silver Manually changed #4cceac
           600: "#3da58a",
           700: "#2e7c67",
           800: "#1e5245",
@@ -59,9 +59,22 @@ export const tokens = (mode) => ({
           400: "#868dfb",
           500: "#6870fa",
           600: "#535ac8",
-          700: "#3e4396",
+          700: "#FED8B1", // Light Orange Manually changed #3e4396
           800: "#2a2d64",
           900: "#151632",
+        },
+        button: {
+          backgroundColor: "#FED8B1",
+          color: "#3d3d3d",
+          "&:hover": {
+            backgroundColor: "#A5917B",
+          },
+        },
+        gridColumn: {
+          backgroundColor: "#1F262A",
+          color: "#a3a3a3",
+          fontSize: "16px",
+          fontWeight: "bold",
         },
       }
     : {
@@ -80,7 +93,7 @@ export const tokens = (mode) => ({
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
-          400: "#f2f0f0", // manually changed
+          400: "#f2f0f0", //  manually changed
           500: "#141b2d",
           600: "#1F2A40",
           700: "#727681",
@@ -119,6 +132,19 @@ export const tokens = (mode) => ({
           700: "#a4a9fc",
           800: "#c3c6fd",
           900: "#e1e2fe",
+        },
+        button: {
+          backgroundColor: "#FED8B1",
+          color: "#666666",
+          "&:hover": {
+            backgroundColor: "#A5917B",
+          },
+        },
+        gridColumn: {
+          backgroundColor: "#4C4A45",
+          color: "#727681",
+          fontSize: "16px",
+          fontWeight: "bold",
         },
       }),
 });

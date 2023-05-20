@@ -68,19 +68,32 @@ export const ScheduleIndex = () => {
           renderCell: (params) => (
             <>
               <Button
-              component={Link}
-              to={`/schedules/${params.row.id}/edit`}
-              variant="contained"
-              startIcon={<ModeEditOutlineOutlinedIcon />}
+                component={Link}
+                to={`/schedules/${params.row.id}/edit`}
+                variant="contained"
+                sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                  },
+                }} // Cambia el color de fondo del botón
               >
-            
-              Editar
-            </Button>
-              <Button 
+                <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
+              </Button>
+
+              <Button
                 variant="contained"
                 onClick={() => deleteSchedule(params.row.id)}
-                startIcon={<DeleteIcon />}>
-                Eliminar
+                sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
+                  },
+                }} // Cambia el color de fondo del botón
+              >
+                <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
             </>
           ),
@@ -100,13 +113,16 @@ export const ScheduleIndex = () => {
                     component={Link}
                     to="/schedules/create"
                     sx={{
-                      backgroundColor: colors.blueAccent[700],
-                      color: colors.grey[100],
+                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                      color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                       fontSize: "14px",
                       fontWeight: "bold",
                       padding: "10px 20px",
                       textDecoration: "none",
+                      "&:hover": {
+                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : colors.primary[100], 
                     }}
+                  }
                   >
                       Agendar servicio
                       <AddOutlinedIcon sx={{ ml: "10px" }} />
@@ -126,16 +142,21 @@ export const ScheduleIndex = () => {
               "& .name-column--cell": {
                 color: colors.greenAccent[300],
               },
+              
               "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
+                fontSize: "16px", // Tamaño de la letra más grande
+                fontWeight: "bold", // Letra en negrita
               },
               "& .MuiDataGrid-virtualScroller": {
                 backgroundColor: colors.primary[400],
               },
               "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: colors.blueAccent[700],
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : colors.primary[100],
+                color: `theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100] !important`,
               },
               "& .MuiCheckbox-root": {
                 color: `${colors.greenAccent[200]} !important`,
@@ -159,4 +180,3 @@ export const ScheduleIndex = () => {
        
         )
     }
-

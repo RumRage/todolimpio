@@ -93,7 +93,7 @@ return (
             value={formValues.combo_id}
             onChange={onChange}
             
-            input={<OutlinedInput label="Servicios" />}
+            input={<OutlinedInput id="demo-multiple-checkbox" />}
             renderValue={(selected) =>
               selected
                 .map((value) => {
