@@ -209,9 +209,6 @@ export const ScheduleProvider = ({ children }) => {
   };
 
   const deleteSchedule = async (id) => {
-    if (!window.confirm("Estás seguro?")) {
-      return;
-    }
     await axios.delete("schedules/" + id);
     getSchedules();
   };

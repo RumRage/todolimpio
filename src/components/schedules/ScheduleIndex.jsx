@@ -4,12 +4,11 @@ import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button, Modal, Typography, Divider } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-
+import AlertDialog from "./AlertDialog";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, deleteSchedule, paymentOptions } = useContext(ScheduleContext);
@@ -19,6 +18,10 @@ export const ScheduleIndex = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
+    const handleDelete = (id) => {
+      deleteSchedule(id);
+    };
 
       const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -80,82 +83,12 @@ export const ScheduleIndex = () => {
               >
                 <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
-             <DeleteModal />
 
-              <Button
-                variant="contained"
-                onClick={() => deleteSchedule(params.row.id)}
-                sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                  "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                  },
-                }} 
-              >
-                <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-              </Button>
+              <AlertDialog onDelete={() => handleDelete(params.row.id)} />
             </>
           ),
         },
     ];
-    const style = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 400,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
-    };
-
-    const DeleteModal = () => {
-      const [open, setOpen] = React.useState(false);
-      const handleOpen = () => setOpen(true);
-      const handleClose = () => setOpen(false);
-  
-      return (
-        <div>
-           <Button onClick={handleOpen}>Open modal</Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2" >
-                Confirmación
-              </Typography>
-              <Divider />
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                ¿Estás seguro de que querés eliminar esto?
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
-            <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>
-              Cancelar
-            </Button>
-            <Button 
-              variant="solid" 
-              onClick={() => setOpen(false)}
-              sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.danger[500] : colors.danger[400],
-                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                  "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                  },
-                }} 
-            >
-              Eliminar
-            </Button>
-          </Box>
-            </Box>
-          </Modal>
-        </div>
-      );
-    };
     
     
     return (
