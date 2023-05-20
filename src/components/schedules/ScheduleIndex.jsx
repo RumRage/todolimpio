@@ -4,7 +4,7 @@ import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography, Divider } from "@mui/material";
 import Header from "../../components/Header";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -80,7 +80,7 @@ export const ScheduleIndex = () => {
               >
                 <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
-             <BasicModal />
+             <DeleteModal />
 
               <Button
                 variant="contained"
@@ -111,7 +111,7 @@ export const ScheduleIndex = () => {
       p: 4,
     };
 
-    const BasicModal = () => {
+    const DeleteModal = () => {
       const [open, setOpen] = React.useState(false);
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
@@ -126,12 +126,31 @@ export const ScheduleIndex = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
+              <Typography id="modal-modal-title" variant="h6" component="h2" >
+                Confirmación
               </Typography>
+              <Divider />
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                ¿Estás seguro de que querés eliminar esto?
               </Typography>
+              <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 2 }}>
+            <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>
+              Cancelar
+            </Button>
+            <Button 
+              variant="solid" 
+              onClick={() => setOpen(false)}
+              sx={{ 
+                  backgroundColor: theme.palette.mode === 'dark' ? colors.danger[500] : colors.danger[400],
+                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                  "&:hover": {
+                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                  },
+                }} 
+            >
+              Eliminar
+            </Button>
+          </Box>
             </Box>
           </Modal>
         </div>
