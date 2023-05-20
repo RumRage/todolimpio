@@ -91,7 +91,7 @@ export const ScheduleIndex = () => {
                   "&:hover": {
                     backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
                   },
-                }} // Cambia el color de fondo del botón
+                }} 
               >
                 <DeleteIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
@@ -121,8 +121,8 @@ export const ScheduleIndex = () => {
                       textDecoration: "none",
                       "&:hover": {
                         backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                    }}
-                  }
+                    },
+                  }}
                   >
                       Agendar servicio
                       <AddOutlinedIcon sx={{ ml: "10px" }} />
@@ -147,8 +147,8 @@ export const ScheduleIndex = () => {
                 backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#d598a3",
                 color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
                 borderBottom: "none",
-                fontSize: "16px", // Tamaño de la letra más grande
-                fontWeight: "bold", // Letra en negrita
+                fontSize: "16px", 
+                fontWeight: "bold", 
               },
               "& .MuiDataGrid-virtualScroller": {
                 backgroundColor: colors.primary[400],
