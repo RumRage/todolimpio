@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import ProductContext from "../../Context/ProductContext";
+import DisposableContext from "../../Context/DisposableContext";
 import { Box, useTheme, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle }from '@mui/material';
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
+import UnarchiveOutlinedIcon from '@mui/icons-material/UnarchiveOutlined';
 
-export default function ProductCreateModal() {
-  const { formValues, onChange, storeProduct, errors, setErrors} = useContext(ProductContext);
+
+export default function DisposableCreateModal() {
+  const { formValues, onChange, storeDisposable, errors, setErrors} = useContext(DisposableContext);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
@@ -59,18 +60,18 @@ export default function ProductCreateModal() {
         },
       }}
       >
-          (F10) Nuevo producto
-          <AddBusinessOutlinedIcon sx={{ ml: "10px" }} />
+          (F10) Nuevo descartable
+          <UnarchiveOutlinedIcon sx={{ ml: "10px" }} />
     </Button>  
       <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={storeProduct} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
+        <form onSubmit={storeDisposable} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
         <DialogTitle>
-          <Header title="NUEVO PRODUCTO" subtitle="Crear un nuevo producto para el inventario" />
+          <Header title="NUEVO DESCARTABLE" subtitle="Crear un nuevo descartable para el inventario" />
         </DialogTitle>
         <DialogContent>
         
           <DialogContentText>
-            Crear un nuevo producto
+            Crear un nuevo descartable
           </DialogContentText>
           <Box 
            display="grid"
@@ -153,7 +154,7 @@ export default function ProductCreateModal() {
             }}
           >Cancelar</Button>
           <Button type="submit" color="secondary" variant="contained">
-            Crear nuevo producto
+            Crear nuevo descartable
           </Button>
         </DialogActions>
         </form>
