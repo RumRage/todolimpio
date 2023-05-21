@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -17,10 +17,14 @@ export const ProductProvider = ({ children }) => {
   };
   const [formValues, setFormValues] = useState(initialForm);
 
-  const onChange = (e) => {
-    const { name, value} = e.target;
-    setFormValues({...formValues, [name]: value});
-    }
+  const onChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  }, []);
+
 
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState([]);
@@ -45,12 +49,16 @@ export const ProductProvider = ({ children }) => {
     });
   };
 
+  const refreshIndex = () => {
+    window.location.reload();
+  };
+
   const storeProduct = async (e) => {
     e.preventDefault();
     try{
       await axios.post("products", formValues);
       setFormValues(initialForm);
-      navigate("/products");
+      refreshIndex();
     } catch(e){
       if(e.response.status === 422){
       setErrors(e.response.data.errors);

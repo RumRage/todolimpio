@@ -6,9 +6,9 @@ import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
-import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
+import CreateModal from "./CreateModal";
 
 export const ProductIndex = () => {
     const theme = useTheme();
@@ -65,24 +65,8 @@ export const ProductIndex = () => {
                     subtitle="Listado de productos"
                 />
                 <Box>
-                    <Button
-                        component={Link}
-                        to="/products/create"
-                        sx={{
-                          backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                          color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                          fontSize: "14px",
-                          fontWeight: "bold",
-                          padding: "10px 20px",
-                          textDecoration: "none",
-                          "&:hover": {
-                            backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                        },
-                      }}
-                      >
-                          Nuevo producto
-                          <AddBusinessOutlinedIcon sx={{ ml: "10px" }} />
-                    </Button>
+                   
+                    <CreateModal />
                 </Box>
             </Box>
             <Box
