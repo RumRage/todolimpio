@@ -4,14 +4,16 @@ import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import LinkBreadcrumb from "@mui/material/Link";
 import Header from "../../components/Header";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
+import ScheduleCreateModal from "./ScheduleCreateModal";
+import { HotKeys } from "react-hotkeys";
 
 export const ScheduleIndex = () => {
-    const { schedules, getSchedules, deleteSchedule, paymentOptions } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, [])
@@ -20,8 +22,63 @@ export const ScheduleIndex = () => {
     const colors = tokens(theme.palette.mode);
 
     const handleDelete = (id) => {
-      deleteSchedule(id);
+      deleteSchedule(id); 
+      setDeletedSnackbar(true);
     };
+
+    useEffect(() => {
+      const scheduleCreated = localStorage.getItem("scheduleCreated");
+      if (scheduleCreated) {
+        setOpenSnackbar(true);
+        localStorage.removeItem("scheduleCreated");
+      }
+    }, []);
+
+    useEffect(() => {
+      let timeoutId;
+      if (openSnackbar) {
+        timeoutId = setTimeout(() => {
+          setOpenSnackbar(false);
+        }, 7000); // Cambia a 10000 para que dure 10 segundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [openSnackbar]);
+
+    useEffect(() => {
+      let timeoutId;
+      if (deletedSnackbar) {
+        timeoutId = setTimeout(() => {
+          setDeletedSnackbar(false);
+        }, 5000); // Cambia a la duración deseada, en milisegundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [deletedSnackbar]);
+
+    const handlers = {
+      openModal: () => {
+        // Abrir la ventana modal
+        // ...
+      },
+    };
+  
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.keyCode === 121) {
+          // Presionar "F10" para abrir la ventana modal
+          handlers.openModal();
+        }
+      };
+  
+      document.addEventListener("keydown", handleKeyDown);
+  
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [handlers]);
 
       const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -99,28 +156,22 @@ export const ScheduleIndex = () => {
                 subtitle="Agenda de servicios de Todolimpio MDQ"
             />
             <Box>
-                <Button
-                    component={Link}
-                    to="/schedules/create"
-                    sx={{
-                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                      color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      padding: "10px 20px",
-                      textDecoration: "none",
-                      "&:hover": {
-                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                    },
-                  }}
-                  >
-                      Agendar servicio
-                      <AddOutlinedIcon sx={{ ml: "10px" }} />
-                </Button>
+                <HotKeys handlers={handlers}>
+                  {/* ... */}
+                  <ScheduleCreateModal />
+                </HotKeys>
             </Box>
         </Box>
+        <Box m="10px 0 0 0">
+              <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
+                  Inventario
+                </LinkBreadcrumb>
+                <Typography color="text.primary">Agenda</Typography>
+              </Breadcrumbs>
+          </Box>
         <Box
-            m="40px 0 0 0"
+            m="20px 0 0 0"
             height="75vh"
             sx={{
               "& .MuiDataGrid-root": {
@@ -165,6 +216,48 @@ export const ScheduleIndex = () => {
                 pageSize={5}
                 disableSelectionOnClick
             />
+            <Snackbar
+                  open={openSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px", 
+                    },
+                  }}
+                >
+                  <Alert onClose={handleSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio agendado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={deletedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={() => setDeletedSnackbar(false)}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio agendado eliminado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio agendado actualizado exitosamente
+                  </Alert>
+                </Snackbar>
             </Box>
         </Box>
        

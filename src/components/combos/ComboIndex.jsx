@@ -5,7 +5,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
-import LinkBreadcrumb from "@mui/material/Link"
+import LinkBreadcrumb from "@mui/material/Link";
 import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
@@ -146,7 +146,7 @@ export const ComboIndex = () => {
               </Breadcrumbs>
             </Box>
         <Box
-            m="40px 0 0 0"
+            m="20px 0 0 0"
             height="75vh"
             sx={{
               "& .MuiDataGrid-root": {

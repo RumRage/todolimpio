@@ -38,6 +38,13 @@ export const ScheduleProvider = ({ children }) => {
     },
   };
 
+   //Breadcrumbs
+   function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
+
+
   const paymentOptions = {
     1: 'A confirmar',
     2: 'Efectivo',
@@ -171,6 +178,16 @@ export const ScheduleProvider = ({ children }) => {
     fetchCombos();
   }, []);
 
+  const refreshIndex = () => {
+    window.location.reload();
+  };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const storeSchedule = async (e) => {
     e.preventDefault();
     try {
@@ -186,12 +203,19 @@ export const ScheduleProvider = ({ children }) => {
         payments: parseInt(formValues.payments), // Agrega el campo de pagos
       });
       setFormValues(initialForm);
-      navigate("/schedules");
+       refreshIndex();
+      localStorage.setItem("scheduleCreated", "true"); // Servicio agendado exitosamente
     } catch (e) {
       if (e.response.status === 422) {
         setErrors(e.response.data.errors);
       }
     }
+  };
+
+  const [updatedSnackbar, setUpdatedSnackbar] = useState(false);
+
+  const handleUpdatedSnackbarClose = () => {
+    setUpdatedSnackbar(false);
   };
 
   const updateSchedule = async (e) => {
@@ -200,6 +224,7 @@ export const ScheduleProvider = ({ children }) => {
       await axios.put("schedules/" + schedule.id, formValues);
       setFormValues(initialForm);
       navigate("/schedules");
+      setUpdatedSnackbar(true); // Servicio agenda actualizado exitosamente
     } catch (e) {
       setErrors(e.response.data.errors);
         if (e.response.status === 422) {
@@ -207,6 +232,8 @@ export const ScheduleProvider = ({ children }) => {
       }
     }
   };
+
+  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
   const deleteSchedule = async (id) => {
     await axios.delete("schedules/" + id);
@@ -232,6 +259,15 @@ export const ScheduleProvider = ({ children }) => {
       MenuProps,
       payments,
       paymentOptions,
+      handleSnackbarClose, 
+      openSnackbar, 
+      setOpenSnackbar, 
+      deletedSnackbar, 
+      setDeletedSnackbar, 
+      updatedSnackbar, 
+      setUpdatedSnackbar, 
+      handleUpdatedSnackbarClose, 
+      handleClick
     }}>{children}
     </ScheduleContext.Provider>
   );

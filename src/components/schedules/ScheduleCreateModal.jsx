@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import ComboContext from "../../Context/ComboContext";
+import ScheduleContext from "../../Context/ScheduleContext";
 import { Box, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, Select, MenuItem, ListItemText, Checkbox, useTheme }from '@mui/material';
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-export default function ComboCreateModal() {
-    const { formValues, onChange, storeCombo, errors, setErrors, services, setServices, MenuProps } = useContext(ComboContext);
+export default function ScheduleCreateModal() {
+  const { formValues, onChange, storeSchedule, errors, setErrors, combos, setCombos, MenuProps, payments, paymentOptions } = useContext(ScheduleContext);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
@@ -43,6 +46,7 @@ export default function ComboCreateModal() {
   }, []);
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div>
       <Button 
         variant="outlined" 
@@ -59,25 +63,25 @@ export default function ComboCreateModal() {
         },
       }}
       >
-          (F10) Nuevo combo
+          (F10) Agendar servicio
           <AddOutlinedIcon sx={{ ml: "10px" }} />
     </Button>  
       <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={storeCombo} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
+        <form onSubmit={storeSchedule} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
         <DialogTitle>
-          <Header title="NUEVO COMBO" subtitle="Crear un nuevo combo para los precios" />
+          <Header title="NUEVO SERVICIO AGENDA" subtitle="Crear un nuevo servicio para la agenda" />
         </DialogTitle>
         <DialogContent>
         
           <DialogContentText>
-            Crear un nuevo combo
+            Crear un nuevo servicio
           </DialogContentText>
           <Box 
            display="grid"
            gap="30px"
-           gridTemplateColumns="repeat(5, minmax(0, 1fr))"
+           gridTemplateColumns="repeat(4, minmax(0, 1fr))"
            sx={{
-             "& > div": { gridColumn: isNonMobile ? undefined : "span 5" },
+             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
            }}
         >
         <TextField
@@ -89,22 +93,58 @@ export default function ComboCreateModal() {
           name="name"
           value={formValues["name"]}
           onChange={onChange}
-          sx={{ gridColumn: "span 4" }}
+          sx={{ gridColumn: "span 2" }}
           error={errors.name !== undefined}
           helperText={errors.name && errors.name[0]}
         />
-       <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 2" }}>
-        <InputLabel>Servicios</InputLabel>
+        <TextField
+          fullWidth
+          variant="filled"
+          type="number"
+          label="Telefono"
+          name="tel"
+          value={formValues["tel"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 2" }}
+          error={errors.tel !== undefined}
+          helperText={errors.tel && errors.tel[0]}
+        />
+        <TextField
+          fullWidth
+          variant="filled"
+          type="text"
+          label="Direccion"
+          name="address"
+          value={formValues["address"]}
+          onChange={onChange}
+          sx={{ gridColumn: "span 2" }}
+          error={errors.address !== undefined}
+          helperText={errors.address && errors.address[0]}
+        />
+      <FormControl fullWidth sx={{ gridColumn: "span 2" }} variant="filled">
+          <DateTimePicker
+            id="fecha-hora"
+            value={formValues.date_time}
+            onChange={(date) => onChange({ target: { name: 'date_time', value: date.format('YYYY/MM/DD HH:mm:ss') } })}
+            renderInput={(params) => <TextField {...params} />}
+            label="Fecha y Hora"
+            ampm={false}
+            inputFormat="yyyy/MM/dd HH:mm:ss"
+          />
+          {errors.date_time && <span className="text-sm text-red-400">{errors.date_time[0]}</span>}
+        </FormControl>
+       <FormControl variant="filled" sx={{ gridColumn: "span 1" }}>
+        <InputLabel >Combos</InputLabel>
           <Select
-            name="service_id"
+            name="combo_id"
             multiple
-            value={formValues.service_id}
+            value={formValues.combo_id}
             onChange={onChange}
             renderValue={(selected) =>
               selected
                 .map((value) => {
-                  const service = services.find((service) => service.id === value);
-                  return service ? service.name : "";
+                  const combo = combos.find((combo) => combo.id === value);
+                  return combo ? combo.name : "";
                 })
                 .join(", ")
             }
@@ -112,14 +152,14 @@ export default function ComboCreateModal() {
             <MenuItem value="">
               <em>Selecciona un servicio</em>
             </MenuItem>
-            {services.map((service) => (
-              <MenuItem key={service.id} value={service.id}>
-                <Checkbox checked={formValues.service_id.includes(service.id)} />
-                <ListItemText primary={service.name} />
+            {combos.map((combo) => (
+              <MenuItem key={combo.id} value={combo.id}>
+                <Checkbox checked={formValues.combo_id.includes(combo.id)} />
+                <ListItemText primary={combo.name} />
               </MenuItem>
             ))}
           </Select>
-        {errors.service_id && <span className="text-sm text-red-400">{errors.service_id[0]}</span>}
+        {errors.combo_id && <span className="text-sm text-red-400">{errors.combo_id[0]}</span>}
         </FormControl>
         <TextField
           fullWidth
@@ -157,6 +197,24 @@ export default function ComboCreateModal() {
           error={errors.total_price !== undefined}
           helperText={errors.total_price && errors.total_price[0]}
         />
+        <FormControl fullWidth sx={{ gridColumn: "span 2" }} variant="filled">
+          <InputLabel id="payments-label">Metodo de pago</InputLabel>
+          <Select
+            labelId="payments-label"
+            id="payments"
+            value={formValues.payments}
+            onChange={onChange}
+            name="payments"
+            error={errors.payments ? true : false}
+          >
+            {Object.entries(paymentOptions).map(([value, label]) => (
+              <MenuItem key={value} value={value}>
+                {label}
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.payments && <span className="error">{errors.payments[0]}</span>}
+        </FormControl>
         </Box>
         </DialogContent>
         <DialogActions>
@@ -170,11 +228,13 @@ export default function ComboCreateModal() {
             }}
           >Cancelar</Button>
           <Button type="submit" color="secondary" variant="contained">
-            Crear nuevo combo
+            Agendar nuevo servicio
           </Button>
         </DialogActions>
         </form>
       </Dialog>
     </div>
+
+    </LocalizationProvider>
   );
 }
