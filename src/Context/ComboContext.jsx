@@ -33,6 +33,12 @@ export const ComboProvider = ({ children }) => {
     },
   };
 
+  //Breadcrumbs
+  function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
+
   const getCombos = async () => {
     const response = await axios.get("combos?with=services"); // Eager Loading
     setCombos(response.data.data);
@@ -156,6 +162,16 @@ export const ComboProvider = ({ children }) => {
     fetchServices();
   }, []);
 
+  const refreshIndex = () => {
+    window.location.reload();
+  };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const storeCombo = async (e) => {
     e.preventDefault();
       try {
@@ -167,12 +183,19 @@ export const ComboProvider = ({ children }) => {
           service_id: formValues.service_id 
         });
       setFormValues(initialForm);
-      navigate("/combos");
+      refreshIndex();
+      localStorage.setItem("comboCreated", "true"); // Combo creado exitosamente
       } catch (e) {
         if (e.response.status === 422) {
          setErrors(e.response.data.errors);
       }
     }
+  };
+
+  const [updatedSnackbar, setUpdatedSnackbar] = useState(false);
+
+  const handleUpdatedSnackbarClose = () => {
+    setUpdatedSnackbar(false);
   };
 
   const updateCombo = async (e) => {
@@ -181,6 +204,7 @@ export const ComboProvider = ({ children }) => {
       await axios.put("combos/" + combo.id, formValues);
       setFormValues(initialForm);
       navigate("/combos");
+      setUpdatedSnackbar(true); // Combo actualizado exitosamente
     } catch (e) {
       setErrors(e.response.data.errors);
         if (e.response.status === 422) {
@@ -188,6 +212,8 @@ export const ComboProvider = ({ children }) => {
       }
     }
   };
+
+  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
   const deleteCombo = async (id) => {
     await axios.delete("combos/" + id);
@@ -210,7 +236,16 @@ export const ComboProvider = ({ children }) => {
       setErrors, 
       services, 
       setServices,
-      MenuProps
+      MenuProps,
+      handleSnackbarClose, 
+      openSnackbar, 
+      setOpenSnackbar, 
+      deletedSnackbar, 
+      setDeletedSnackbar, 
+      updatedSnackbar, 
+      setUpdatedSnackbar, 
+      handleUpdatedSnackbarClose, 
+      handleClick
     }}>{children}
     </ComboContext.Provider>
   );

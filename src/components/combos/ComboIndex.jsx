@@ -4,24 +4,81 @@ import ComboContext from "../../Context/ComboContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import LinkBreadcrumb from "@mui/material/Link"
 import Header from "../../components/Header";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
+import ComboCreateModal from "./ComboCreateModal";
+import { HotKeys } from "react-hotkeys";
+
 
 export const ComboIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
-    const { combos, getCombos, deleteCombo } = useContext(ComboContext);
+    const { combos, getCombos, deleteCombo, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick} = useContext(ComboContext);
     useEffect(() => {
     getCombos();
     }, [])
 
     const handleDelete = (id) => {
-      deleteCombo(id);
+      deleteCombo(id); 
+      setDeletedSnackbar(true);
     };
+
+    useEffect(() => {
+      const comboCreated = localStorage.getItem("comboCreated");
+      if (comboCreated) {
+        setOpenSnackbar(true);
+        localStorage.removeItem("comboCreated");
+      }
+    }, []);
+
+    useEffect(() => {
+      let timeoutId;
+      if (openSnackbar) {
+        timeoutId = setTimeout(() => {
+          setOpenSnackbar(false);
+        }, 7000); // Cambia a 10000 para que dure 10 segundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [openSnackbar]);
+
+    useEffect(() => {
+      let timeoutId;
+      if (deletedSnackbar) {
+        timeoutId = setTimeout(() => {
+          setDeletedSnackbar(false);
+        }, 5000); // Cambia a la duración deseada, en milisegundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [deletedSnackbar]);
+
+    const handlers = {
+      openModal: () => {
+        // Abrir la ventana modal
+        // ...
+      },
+    };
+  
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.keyCode === 121) {
+          // Presionar "F10" para abrir la ventana modal
+          handlers.openModal();
+        }
+      };
+  
+      document.addEventListener("keydown", handleKeyDown);
+  
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [handlers]);
 
     const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -73,26 +130,21 @@ export const ComboIndex = () => {
                 subtitle="Listado de combos"
             />
             <Box>
-                <Button
-                    component={Link}
-                    to="/combos/create"
-                    sx={{
-                      backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                      color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      padding: "10px 20px",
-                      textDecoration: "none",
-                      "&:hover": {
-                        backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                    },
-                  }}
-                  >
-                      Nuevo combo
-                      <AddOutlinedIcon sx={{ ml: "10px" }} />
-                </Button>
+                <HotKeys handlers={handlers}>
+                  {/* ... */}
+                  <ComboCreateModal />
+                </HotKeys>
             </Box>
         </Box>
+
+        <Box m="10px 0 0 0">
+              <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
+                  Inventario
+                </LinkBreadcrumb>
+                <Typography color="text.primary">Combos</Typography>
+              </Breadcrumbs>
+            </Box>
         <Box
             m="40px 0 0 0"
             height="75vh"
@@ -139,6 +191,48 @@ export const ComboIndex = () => {
                 pageSize={5}
                 disableSelectionOnClick
             />
+            <Snackbar
+                  open={openSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px", 
+                    },
+                  }}
+                >
+                  <Alert onClose={handleSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Combo creado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={deletedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={() => setDeletedSnackbar(false)}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Combo eliminado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Combo actualizado exitosamente
+                  </Alert>
+                </Snackbar>
             </Box>
         </Box>
         
