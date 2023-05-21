@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
 
-export default function CreateModal() {
+export default function ProductCreateModal() {
   const { formValues, onChange, storeProduct, errors, setErrors} = useContext(ProductContext);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");

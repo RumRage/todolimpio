@@ -8,7 +8,7 @@ import { Box, Button } from "@mui/material";
 import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
-import CreateModal from "./CreateModal";
+import ProductCreateModal from "./ProductCreateModal";
 
 export const ProductIndex = () => {
     const theme = useTheme();
@@ -65,8 +65,7 @@ export const ProductIndex = () => {
                     subtitle="Listado de productos"
                 />
                 <Box>
-                   
-                    <CreateModal />
+                    <ProductCreateModal />
                 </Box>
             </Box>
             <Box
