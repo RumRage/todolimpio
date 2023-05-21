@@ -4,13 +4,14 @@ import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon, Chip } from "@mui/material";
 import LinkBreadcrumb from "@mui/material/Link";
 import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
 import ScheduleCreateModal from "./ScheduleCreateModal";
 import { HotKeys } from "react-hotkeys";
+import EditButton from "./EditButton";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
@@ -85,7 +86,7 @@ export const ScheduleIndex = () => {
       const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
         { field: "name", headerName: "Nombre", flex: 1 },
-        { field: "tel", headerName: "Telefono", flex: 1 },
+        { field: "tel", headerName: "Telefono", flex: 0.5 },
         { field: "address", headerName: "Direccion", flex: 1 },
         { field: "date_time", headerName: "Fecha", flex: 1 },
         {
@@ -121,7 +122,20 @@ export const ScheduleIndex = () => {
               return paymentOptions[payments];
             },
           },
-        { field: "status", headerName: "Estado", flex: 0.5 },
+          {
+            field: "status",
+            headerName: "Estado",
+            flex: 1,
+            renderCell: (params) => {
+              const { status } = params.row;
+              return (
+                <Chip
+                  label={status}
+                  color={status === "Pendiente" ? "warning" : "default"}
+                />
+              );
+            },
+          },
         {
           field: "actions",
           headerName: "Opciones",
@@ -142,6 +156,7 @@ export const ScheduleIndex = () => {
               >
                 <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
+              <EditButton scheduleId={params.row.id} />
 
               <AlertDialog onDelete={() => handleDelete(params.row.id)} />
             </>

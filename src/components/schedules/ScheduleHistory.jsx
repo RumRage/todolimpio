@@ -3,12 +3,13 @@ import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import { Box, Breadcrumbs, Typography, Chip, Alert, Snackbar } from "@mui/material";
 import LinkBreadcrumb from "@mui/material/Link";
 import Header from "../../components/Header";
+import AlertDialog from "../../components/AlertDialog";
 
 export const ScheduleHistory = () => {
-    const { schedules, getSchedules, paymentOptions, handleClick } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleClick, deletedSnackbar, setDeletedSnackbar, } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, [])
@@ -18,7 +19,22 @@ export const ScheduleHistory = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    
+    const handleDelete = (id) => {
+      deleteSchedule(id); 
+      setDeletedSnackbar(true);
+    };
+
+    useEffect(() => {
+      let timeoutId;
+      if (deletedSnackbar) {
+        timeoutId = setTimeout(() => {
+          setDeletedSnackbar(false);
+        }, 5000); // Cambia a la duración deseada, en milisegundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [deletedSnackbar]);
 
       const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -59,7 +75,31 @@ export const ScheduleHistory = () => {
               return paymentOptions[payments];
             },
           },
-        { field: "status", headerName: "Estado", flex: 0.5 },
+          {
+            field: "status",
+            headerName: "Estado",
+            flex: 1,
+            renderCell: (params) => {
+              const { status } = params.row;
+              return (
+                <Chip
+                  label={status}
+                  color={status === "Hecho" ? "success" : "default"}
+                />
+              );
+            }
+          },
+          {
+            field: "actions",
+            headerName: "Opciones",
+            flex: 1.5,
+            renderCell: (params) => (
+              <>
+  
+                <AlertDialog onDelete={() => handleDelete(params.row.id)} />
+              </>
+            ),
+          },
     ];
     
     
@@ -125,7 +165,20 @@ export const ScheduleHistory = () => {
                 pageSize={5}
                 disableSelectionOnClick
             />
-            
+             <Snackbar
+                  open={deletedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={() => setDeletedSnackbar(false)}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio eliminado exitosamente del historial
+                  </Alert>
+                </Snackbar>
             </Box>
         </Box>
        
