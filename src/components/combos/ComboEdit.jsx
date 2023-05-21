@@ -49,16 +49,14 @@ return (
           error={errors.name !== undefined}
           helperText={errors.name && errors.name[0]}
         />
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-multiple-checkbox-label">Servicios</InputLabel>
+        <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 1" }}>
+          <InputLabel>Servicios</InputLabel>
             <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
               name="service_id"
               multiple
               value={formValues.service_id}
               onChange={onChange}
-              input={<OutlinedInput label="Servicios" />}
+              label="Servicios"
               renderValue={(selected) =>
                 selected
                   .map((value) => {

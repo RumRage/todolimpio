@@ -78,6 +78,7 @@ return (
           error={errors.address !== undefined}
           helperText={errors.address && errors.address[0]}
         />
+        
       <FormControl fullWidth sx={{ gridColumn: "span 2" }} variant="filled">
           <DateTimePicker
             id="fecha-hora"
@@ -91,16 +92,13 @@ return (
           {errors.date_time && <span className="text-sm text-red-400">{errors.date_time[0]}</span>}
         </FormControl>
        <FormControl variant="filled" sx={{ gridColumn: "span 1" }}>
-        <InputLabel id="demo-multiple-checkbox-label">Combos</InputLabel>
+        <InputLabel>Combos</InputLabel>
           <Select
-            labelId="demo-multiple-checkbox-label"
-            id="demo-multiple-checkbox"
             name="combo_id"
             multiple
             value={formValues.combo_id}
             onChange={onChange}
-            
-            input={<OutlinedInput label="Servicios" />}
+            label="Combos"
             renderValue={(selected) =>
               selected
                 .map((value) => {
@@ -111,7 +109,7 @@ return (
             }
           >
             <MenuItem value="">
-              <em>Selecciona un servicio</em>
+              <em>Selecciona un combo</em>
             </MenuItem>
             {combos.map((combo) => (
               <MenuItem key={combo.id} value={combo.id}>

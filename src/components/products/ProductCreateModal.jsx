@@ -91,6 +91,11 @@ export default function ProductCreateModal() {
             sx={{ gridColumn: "span 2" }}
             error={errors.name !== undefined}
             helperText={errors.name && errors.name[0]}
+            inputRef={(input) => {
+              if(input != null) {
+                 input.focus();
+              }
+            }}
           />
           <TextField
             fullWidth
