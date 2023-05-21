@@ -10,6 +10,8 @@ import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
 import ProductCreateModal from "./ProductCreateModal";
+import { HotKeys } from "react-hotkeys";
+
 
 export const ProductIndex = () => {
     const theme = useTheme();
@@ -57,6 +59,28 @@ export const ProductIndex = () => {
       };
     }, [deletedSnackbar]);
 
+    const handlers = {
+      openModal: () => {
+        // Abrir la ventana modal
+        // ...
+      },
+    };
+  
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.keyCode === 121) {
+          // Presionar "F10" para abrir la ventana modal
+          handlers.openModal();
+        }
+      };
+  
+      document.addEventListener("keydown", handleKeyDown);
+  
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [handlers]);
+
     const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
         { field: "name", headerName: "Nombre", flex: 1 },
@@ -100,7 +124,10 @@ export const ProductIndex = () => {
                 />
                 
                 <Box>
-                    <ProductCreateModal />
+                <HotKeys handlers={handlers}>
+                  {/* ... */}
+                  <ProductCreateModal />
+                </HotKeys>
                 </Box>
             </Box>
             <Box m="10px 0 0 0">

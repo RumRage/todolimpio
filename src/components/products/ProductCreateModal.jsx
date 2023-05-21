@@ -1,4 +1,4 @@
-import React, { useContext, useEffect }from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductContext from "../../Context/ProductContext";
 import { Box, useTheme, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle }from '@mui/material';
 import { tokens } from "../../theme";
@@ -17,7 +17,7 @@ export default function ProductCreateModal() {
     setErrors({});
   }, []);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,6 +26,21 @@ export default function ProductCreateModal() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 121) {
+        // Presionar "F10" para abrir la ventana modal
+        handleClickOpen();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <div>
@@ -44,7 +59,7 @@ export default function ProductCreateModal() {
         },
       }}
       >
-          Nuevo producto
+          (F10) Nuevo producto
           <AddBusinessOutlinedIcon sx={{ ml: "10px" }} />
     </Button>  
       <Dialog open={open} onClose={handleClose}>
