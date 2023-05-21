@@ -4,7 +4,8 @@ import ProductContext from "../../Context/ProductContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button, Snackbar, Alert } from "@mui/material";
+import { Box, Button, Snackbar, Alert, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import LinkBreadcrumb from "@mui/material/Link"
 import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
@@ -14,7 +15,7 @@ export const ProductIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose } = useContext(ProductContext);
+    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
     }, []);
@@ -97,12 +98,21 @@ export const ProductIndex = () => {
                     title="PRODUCTOS"
                     subtitle="Listado de productos"
                 />
+                
                 <Box>
                     <ProductCreateModal />
                 </Box>
             </Box>
+            <Box m="10px 0 0 0">
+              <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
+                  Inventario
+                </LinkBreadcrumb>
+                <Typography color="text.primary">Productos</Typography>
+              </Breadcrumbs>
+            </Box>
             <Box
-            m="40px 0 0 0"
+            m="20px 0 0 0"
             height="75vh"
             sx={{
               "& .MuiDataGrid-root": {
@@ -138,6 +148,7 @@ export const ProductIndex = () => {
               },
             }}
                 >
+                
                 <DataGrid
                     rows={products}
                     columns={columns}

@@ -30,6 +30,12 @@ export const ProductProvider = ({ children }) => {
   const [product, setProduct] = useState([]);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  //Breadcrumbs
+  function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
   
   const getProducts = async () => {
     const apiProducts = await axios.get("products");
@@ -101,7 +107,7 @@ export const ProductProvider = ({ children }) => {
     }
   
 
-  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose }}>{children}</ProductContext.Provider>
+  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick }}>{children}</ProductContext.Provider>
 }
 
 export default ProductContext;
