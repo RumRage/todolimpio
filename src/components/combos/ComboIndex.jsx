@@ -140,7 +140,7 @@ export const ComboIndex = () => {
         <Box m="10px 0 0 0">
               <Breadcrumbs separator="›" aria-label="breadcrumb">
                 <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
-                  Inventario
+                  Precio
                 </LinkBreadcrumb>
                 <Typography color="text.primary">Combos</Typography>
               </Breadcrumbs>

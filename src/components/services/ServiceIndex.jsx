@@ -129,13 +129,13 @@ export const ServiceIndex = () => {
           <Box m="10px 0 0 0">
             <Breadcrumbs separator="›" aria-label="breadcrumb">
               <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
-                Inventario
+                Precio
               </LinkBreadcrumb>
               <Typography color="text.primary">Servicios</Typography>
             </Breadcrumbs>
           </Box>
           <Box
-            m="40px 0 0 0"
+            m="20px 0 0 0"
             height="75vh"
             sx={{
               "& .MuiDataGrid-root": {
