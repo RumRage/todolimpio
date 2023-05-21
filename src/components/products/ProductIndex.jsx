@@ -4,7 +4,7 @@ import ProductContext from "../../Context/ProductContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Snackbar, Alert } from "@mui/material";
 import Header from "../../components/Header";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
@@ -14,7 +14,7 @@ export const ProductIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { products, getProducts, deleteProduct } = useContext(ProductContext);
+    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
     }, []);
@@ -114,6 +114,15 @@ export const ProductIndex = () => {
                     pageSize={5}
                     disableSelectionOnClick
                 />
+                <Snackbar
+                  open={openSnackbar}
+                  autoHideDuration={6000}
+                  onClose={handleSnackbarClose}
+                >
+                  <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Producto creado exitosamente
+                  </Alert>
+                </Snackbar>
             </Box>
         </Box>
     )
