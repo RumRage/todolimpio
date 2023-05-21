@@ -82,6 +82,7 @@ export default function DisposableCreateModal() {
            }}
         >
           <TextField
+            autoFocus
             fullWidth
             variant="filled"
             type="text"

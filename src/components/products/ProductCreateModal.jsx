@@ -81,6 +81,7 @@ export default function ProductCreateModal() {
            }}
         >
           <TextField
+            autoFocus
             fullWidth
             variant="filled"
             type="text"
