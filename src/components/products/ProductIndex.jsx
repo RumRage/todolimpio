@@ -14,7 +14,7 @@ export const ProductIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar } = useContext(ProductContext);
+    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar, setOpenSnackbar } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
     }, []);
@@ -22,6 +22,26 @@ export const ProductIndex = () => {
     const handleDelete = (id) => {
       deleteProduct(id);
     };
+
+    useEffect(() => {
+      const productCreated = localStorage.getItem("productCreated");
+      if (productCreated) {
+        setOpenSnackbar(true);
+        localStorage.removeItem("productCreated");
+      }
+    }, []);
+
+    useEffect(() => {
+      let timeoutId;
+      if (openSnackbar) {
+        timeoutId = setTimeout(() => {
+          setOpenSnackbar(false);
+        }, 7000); // Cambia a 10000 para que dure 10 segundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [openSnackbar]);
 
     const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -116,10 +136,15 @@ export const ProductIndex = () => {
                 />
                 <Snackbar
                   open={openSnackbar}
-                  autoHideDuration={6000}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
                   onClose={handleSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px", 
+                    },
+                  }}
                 >
-                  <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                  <Alert onClose={handleSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Producto creado exitosamente
                   </Alert>
                 </Snackbar>

@@ -55,26 +55,25 @@ export const ProductProvider = ({ children }) => {
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
+  
+  
 
   const storeProduct = async (e) => {
     e.preventDefault();
-    try{
+    try {
       await axios.post("products", formValues);
       setFormValues(initialForm);
       refreshIndex();
-      setOpenSnackbar(true); // Mostrar el Snackbar al crear exitosamente
-    } catch(e){
-      if(e.response.status === 422){
-      setErrors(e.response.data.errors);
+      localStorage.setItem("productCreated", "true"); // Producto creado exitosamente
+    } catch (e) {
+      if (e.response.status === 422) {
+        setErrors(e.response.data.errors);
       }
     }
-  }
+  };
 
   const updateProduct = async (e) => {
     e.preventDefault();
@@ -95,7 +94,7 @@ export const ProductProvider = ({ children }) => {
     }
   
 
-  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar }}>{children}</ProductContext.Provider>
+  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar }}>{children}</ProductContext.Provider>
 }
 
 export default ProductContext;
