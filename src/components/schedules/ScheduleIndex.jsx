@@ -18,6 +18,8 @@ export const ScheduleIndex = () => {
     getSchedules();
     }, [])
 
+    const pendingSchedules = schedules.filter(schedule => schedule.status !== "Hecho" && schedule.status !== "Cancelado");
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -165,7 +167,7 @@ export const ScheduleIndex = () => {
         <Box m="10px 0 0 0">
               <Breadcrumbs separator="›" aria-label="breadcrumb">
                 <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
-                  Inventario
+                  Calendario
                 </LinkBreadcrumb>
                 <Typography color="text.primary">Agenda</Typography>
               </Breadcrumbs>
@@ -208,7 +210,7 @@ export const ScheduleIndex = () => {
             }}
             >
             <DataGrid
-                rows={schedules}
+                rows={pendingSchedules}
                 columns={columns}
                 components={{
                   Toolbar: GridToolbar,

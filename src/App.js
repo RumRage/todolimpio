@@ -31,6 +31,8 @@ import { ComboCreate } from './components/combos/ComboCreate';
 import { ComboEdit } from './components/combos/ComboEdit';
 
 import { ScheduleIndex } from './components/schedules/ScheduleIndex';
+import { ScheduleHistory } from './components/schedules/ScheduleHistory';
+import { ScheduleCanceled } from './components/schedules/ScheduleCanceled';
 import { ScheduleCreate } from './components/schedules/ScheduleCreate';
 import { ScheduleEdit } from './components/schedules/ScheduleEdit';
 
@@ -120,6 +122,8 @@ function App() {
                 <ScheduleProvider>
                   <Routes>
                     <Route path="/" element={<ScheduleIndex />} />
+                    <Route path="/history" element={<ScheduleHistory />} />
+                    <Route path="/canceled" element={<ScheduleCanceled />} />
                     <Route path="/create" element={<ScheduleCreate />} />
                     <Route path="/:id/edit" element={<ScheduleEdit />} />
                   </Routes>

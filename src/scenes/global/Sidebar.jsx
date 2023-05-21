@@ -12,6 +12,9 @@ import AirportShuttleOutlinedIcon from '@mui/icons-material/AirportShuttleOutlin
 import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -120,10 +123,31 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                 selected={selected}
                 setSelected={setSelected}
               />
-               <Item
+               <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Calendario
+              </Typography>
+              <Item
                 title="Agenda"
                 to="/schedules"
-                icon={<Inventory2OutlinedIcon />}
+                icon={<CalendarMonthOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Historial"
+                to="/schedules/history"
+                icon={<HistoryOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Cancelados"
+                to="/schedules/canceled"
+                icon={<EventBusyOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
