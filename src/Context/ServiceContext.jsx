@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -14,16 +14,25 @@ export const ServiceProvider = ({ children }) => {
   };
   const [formValues, setFormValues] = useState(initialForm);
 
-  const onChange = (e) => {
-    const { name, value} = e.target;
-    setFormValues({...formValues, [name]: value});
-    }
+  const onChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues, 
+      [name]: value,
+    }));
+  }, []);
 
   const [services, setServices] = useState([]);
   const [service, setService] = useState([]);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+
+  //Breadcrumbs
+  function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
   
   const getServices = async () => {
     const apiServices = await axios.get("services");
@@ -58,12 +67,23 @@ export const ServiceProvider = ({ children }) => {
     fetchCategories();
   }, []);
 
+  const refreshIndex = () => {
+    window.location.reload();
+  };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const storeService = async (e) => {
     e.preventDefault();
     try{
       await axios.post("services", formValues);
       setFormValues(initialForm);
-      navigate("/services");
+      refreshIndex();
+      localStorage.setItem("serviceCreated", "true"); // Servicio creado exitosamente
     } catch(e){
       if(e.response.status === 422){
       setErrors(e.response.data.errors);
@@ -71,7 +91,11 @@ export const ServiceProvider = ({ children }) => {
     }
   }
 
+  const [updatedSnackbar, setUpdatedSnackbar] = useState(false);
 
+  const handleUpdatedSnackbarClose = () => {
+    setUpdatedSnackbar(false);
+  };
 
   const updateService = async (e) => {
     e.preventDefault();
@@ -79,12 +103,15 @@ export const ServiceProvider = ({ children }) => {
             await axios.put("services/" + service.id, formValues);
             setFormValues(initialForm);
             navigate("/services");
+            setUpdatedSnackbar(true); // Servicio actualizado exitosamente
         } catch(e){
             setErrors(e.response.data.errors);
             if(e.response.status === 422){
         }
     }
-}
+  }
+  
+  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
   const deleteService = async (id) => {
     await axios.delete("services/" + id);
@@ -92,7 +119,7 @@ export const ServiceProvider = ({ children }) => {
     }
   
 
-  return <ServiceContext.Provider value={{ service, services, getService, getServices, onChange, formValues, storeService, errors, updateService, deleteService, setErrors, categories, setCategories }}>{children}</ServiceContext.Provider>
+  return <ServiceContext.Provider value={{ service, services, getService, getServices, onChange, formValues, storeService, errors, updateService, deleteService, setErrors, categories, setCategories, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick }}>{children}</ServiceContext.Provider>
 }
 
 export default ServiceContext;
