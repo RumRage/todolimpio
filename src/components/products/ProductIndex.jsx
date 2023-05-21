@@ -14,13 +14,14 @@ export const ProductIndex = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar, setOpenSnackbar } = useContext(ProductContext);
+    const { products, getProducts, deleteProduct, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose } = useContext(ProductContext);
     useEffect(() => {
     getProducts();
     }, []);
 
     const handleDelete = (id) => {
       deleteProduct(id);
+      setDeletedSnackbar(true);
     };
 
     useEffect(() => {
@@ -42,6 +43,18 @@ export const ProductIndex = () => {
         clearTimeout(timeoutId);
       };
     }, [openSnackbar]);
+
+    useEffect(() => {
+      let timeoutId;
+      if (deletedSnackbar) {
+        timeoutId = setTimeout(() => {
+          setDeletedSnackbar(false);
+        }, 5000); // Cambia a la duración deseada, en milisegundos
+      }
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [deletedSnackbar]);
 
     const columns = [
         { field: "id", headerName: "Id", flex: 0.5 },
@@ -146,6 +159,34 @@ export const ProductIndex = () => {
                 >
                   <Alert onClose={handleSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Producto creado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={deletedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={() => setDeletedSnackbar(false)}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Producto eliminado exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Producto actualizado exitosamente
                   </Alert>
                 </Snackbar>
             </Box>

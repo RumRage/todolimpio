@@ -58,8 +58,6 @@ export const ProductProvider = ({ children }) => {
   const handleSnackbarClose = () => {
     setOpenSnackbar(false);
   };
-  
-  
 
   const storeProduct = async (e) => {
     e.preventDefault();
@@ -74,19 +72,28 @@ export const ProductProvider = ({ children }) => {
       }
     }
   };
+  const [updatedSnackbar, setUpdatedSnackbar] = useState(false);
+
+  const handleUpdatedSnackbarClose = () => {
+    setUpdatedSnackbar(false);
+  };
 
   const updateProduct = async (e) => {
     e.preventDefault();
-        try{
-            await axios.put("products/" + product.id, formValues);
-            setFormValues(initialForm);
-            navigate("/products");
-        } catch(e){
-            setErrors(e.response.data.errors);
-            if(e.response.status === 422){
-        }
+    try {
+      await axios.put("products/" + product.id, formValues);
+      setFormValues(initialForm);
+      navigate("/products");
+      setUpdatedSnackbar(true); // Producto actualizado exitosamente
+    } catch (e) {
+      setErrors(e.response.data.errors);
+      if (e.response.status === 422) {
+        // Manejar errores de validación si es necesario
+      }
     }
-}
+  };
+
+  const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
   const deleteProduct = async (id) => {
     await axios.delete("products/" + id);
@@ -94,7 +101,7 @@ export const ProductProvider = ({ children }) => {
     }
   
 
-  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar }}>{children}</ProductContext.Provider>
+  return <ProductContext.Provider value={{ product, products, getProduct, getProducts, onChange, formValues, storeProduct, errors, updateProduct, deleteProduct, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose }}>{children}</ProductContext.Provider>
 }
 
 export default ProductContext;
