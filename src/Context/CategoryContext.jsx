@@ -24,6 +24,12 @@ export const CategoryProvider = ({ children }) => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
       
+      
+    //Breadcrumbs
+    function handleClick(event) {
+      event.preventDefault();
+      console.info("You clicked a breadcrumb.");
+    }
 
     const getCategories = async () => {
       const apiCategories = await axios.get("categories");
@@ -38,13 +44,24 @@ export const CategoryProvider = ({ children }) => {
       name: apiCategory.name
       });
     };
-      
+    
+    const refreshIndex = () => {
+        window.location.reload();
+      };
+    
+      const [openSnackbar, setOpenSnackbar] = useState(false);
+    
+      const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+      };
+
     const storeCategory = async (e) => {
         e.preventDefault();
             try{
                 await axios.post("categories", formValues);
                 setFormValues(initialForm);
-                navigate("/categories");
+                refreshIndex();
+                localStorage.setItem("categoryCreated", "true"); // Categoria creada exitosamente
             } catch(e){
                 if(e.response.status === 422){
                 setErrors(e.response.data.errors);
@@ -52,18 +69,27 @@ export const CategoryProvider = ({ children }) => {
         }
     }
 
+    const [updatedSnackbar, setUpdatedSnackbar] = useState(false);
+
+    const handleUpdatedSnackbarClose = () => {
+      setUpdatedSnackbar(false);
+    };
+    
     const updateCategory = async (e) => {
         e.preventDefault();
             try{
                 await axios.put("categories/" + category.id, formValues);
                 setFormValues(initialForm);
                 navigate("/categories");
+                setUpdatedSnackbar(true); // Categoria actualizada exitosamente
             } catch(e){
                 setErrors(e.response.data.errors);
                 if(e.response.status === 422){
             }
         }
     }
+
+    const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
     const deleteCategory = async (id) => {
         await axios.delete("categories/" + id);
@@ -72,7 +98,7 @@ export const CategoryProvider = ({ children }) => {
 
     
     return (
-        <CategoryContext.Provider value={{category, categories, getCategory, getCategories, onChange, formValues, storeCategory, errors, updateCategory, deleteCategory, setErrors}}>{children}</CategoryContext.Provider>
+        <CategoryContext.Provider value={{category, categories, getCategory, getCategories, onChange, formValues, storeCategory, errors, updateCategory, deleteCategory, setErrors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick}}>{children}</CategoryContext.Provider>
     )
 }
 

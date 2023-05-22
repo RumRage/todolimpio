@@ -3,27 +3,83 @@ import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Alert, Snackbar, Breadcrumbs, Typography, NavigateNextIcon } from "@mui/material";
+import LinkBreadcrumb from "@mui/material/Link";
 import Header from "../../components/Header";
 import CategoryContext from "../../Context/CategoryContext";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AlertDialog from "../../components/AlertDialog";
+import CategoryCreateModal from "./CategoryCreateModal";
+import { HotKeys } from "react-hotkeys";
 
-
+ 
 export const CategoryIndex = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const { categories, getCategories, deleteCategory } = useContext(CategoryContext);
+  const { categories, getCategories, deleteCategory, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(CategoryContext);
   useEffect(() => {
     getCategories();
   }, [])
 
   const handleDelete = (id) => {
     deleteCategory(id);
+    setDeletedSnackbar(true);
   };
+
+  useEffect(() => {
+    const categoryCreated = localStorage.getItem("categoryCreated");
+    if (categoryCreated) {
+      setOpenSnackbar(true);
+      localStorage.removeItem("categoryCreated");
+    }
+  }, []);
+
+  useEffect(() => {
+    let timeoutId;
+    if (openSnackbar) {
+      timeoutId = setTimeout(() => {
+        setOpenSnackbar(false);
+      }, 7000); // Cambia a 10000 para que dure 10 segundos
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [openSnackbar]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (deletedSnackbar) {
+      timeoutId = setTimeout(() => {
+        setDeletedSnackbar(false);
+      }, 5000); // Cambia a la duración deseada, en milisegundos
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [deletedSnackbar]);
+
+  const handlers = {
+    openModal: () => {
+      // Abrir la ventana modal
+      // ...
+    },
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 121) {
+        // Presionar "F10" para abrir la ventana modal
+        handlers.openModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handlers]);
  
   const columns = [
     { field: "id", headerName: "Id", flex: 0.5 },
@@ -63,26 +119,18 @@ export const CategoryIndex = () => {
         subtitle="Lista de las categorías"
       />
       <Box>
-        <Button
-            component={Link}
-            to="/categories/create"
-            sx={{
-              backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-              color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              textDecoration: "none",
-              "&:hover": {
-                backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-            }}
-          }
-          >
-              Nueva categoria
-              <AddOutlinedIcon sx={{ ml: "10px" }} />
-        </Button>
+                <HotKeys handlers={handlers}>
+                  {/* ... */}
+                  <CategoryCreateModal />
+                </HotKeys>
+                </Box>
       </Box>
-      </Box>
+      <Breadcrumbs separator="›" aria-label="breadcrumb">
+                <LinkBreadcrumb underline="hover" color="inherit" href="/" onClick={handleClick}>
+                  Precios
+                </LinkBreadcrumb>
+                <Typography color="text.primary">Categorias</Typography>
+              </Breadcrumbs>
       <Box
             m="40px 0 0 0"
             height="75vh"
@@ -129,6 +177,48 @@ export const CategoryIndex = () => {
           pageSize={5}
           disableSelectionOnClick
         />
+        <Snackbar
+                  open={openSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px", 
+                    },
+                  }}
+                >
+                  <Alert onClose={handleSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Categoria creada exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={deletedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={() => setDeletedSnackbar(false)}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Categoria eliminada exitosamente
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Categoria actualizada exitosamente
+                  </Alert>
+                </Snackbar>
      </Box>
     </Box>
   );
