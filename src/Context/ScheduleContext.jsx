@@ -51,6 +51,18 @@ export const ScheduleProvider = ({ children }) => {
     3: 'Transferencia',
   };
 
+  const statusOptions = {
+    1: 'Pendiente',
+    2: 'Hecho',
+    3: 'Cancelado',
+  };
+
+  const statusColors = {
+    1: "warning",
+    2: "success",
+    3: "error",
+  };
+
   const getSchedules = async () => {
     const response = await axios.get("schedules?with=combos"); // Eager Loading
     setSchedules(response.data.data);
@@ -233,6 +245,32 @@ export const ScheduleProvider = ({ children }) => {
     }
   };
 
+  const [updatedStatusSnackbar, setUpdatedStatusSnackbar] = useState(false);
+
+  const handleUpdatedStatusSnackbarClose = () => {
+    setUpdatedStatusSnackbar(false);
+  };
+  //Actualizacion de estado
+  const updateStatus = async (id, status) => {
+    try {
+      await axios.put(`/schedules/${id}/status`, { status });
+
+      if (status === 2) {
+        navigate("/schedules/history"); // Redirigir a la pestaña de historial si el nuevo estado es 2 / Hecho
+      } else if (status === 3) {
+        navigate("/schedules/canceled"); // Redirigir a la pestaña de cancelados si el nuevo estado es 3 / Cancelado
+      } else {
+        navigate("/schedules"); // Redirigir a la pestaña de agenda por defecto
+      }
+
+      setUpdatedSnackbar(true); // Estado de la agenda actualizado exitosamente
+    } catch (error) {
+      // Manejar errores
+    }
+  };
+
+
+
   const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
   const deleteSchedule = async (id) => {
@@ -259,6 +297,7 @@ export const ScheduleProvider = ({ children }) => {
       MenuProps,
       payments,
       paymentOptions,
+      statusOptions,
       handleSnackbarClose, 
       openSnackbar, 
       setOpenSnackbar, 
@@ -266,8 +305,13 @@ export const ScheduleProvider = ({ children }) => {
       setDeletedSnackbar, 
       updatedSnackbar, 
       setUpdatedSnackbar, 
-      handleUpdatedSnackbarClose, 
-      handleClick
+      handleUpdatedSnackbarClose,
+      updatedStatusSnackbar, 
+      setUpdatedStatusSnackbar, 
+      handleUpdatedStatusSnackbarClose,
+      handleClick,
+      updateStatus,
+      statusColors
     }}>{children}
     </ScheduleContext.Provider>
   );

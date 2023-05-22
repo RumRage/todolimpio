@@ -9,12 +9,12 @@ import Header from "../../components/Header";
 import AlertDialog from "../../components/AlertDialog";
 
 export const ScheduleCanceled = () => {
-    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleClick, deletedSnackbar, setDeletedSnackbar } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions, statusOptions, statusColors, handleClick, deletedSnackbar, setDeletedSnackbar, updatedStatusSnackbar, handleUpdatedStatusSnackbarClose } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, [])
 
-    const pendingSchedules = schedules.filter(schedule => schedule.status !== "Pendiente" && schedule.status !== "Hecho");
+    const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Cancelado');
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -79,16 +79,17 @@ export const ScheduleCanceled = () => {
           {
             field: "status",
             headerName: "Estado",
-            flex: 1,
+            flex: 0.8,
             renderCell: (params) => {
               const { status } = params.row;
+              const color = statusColors[status] || "default"; 
               return (
                 <Chip
-                  label={status}
-                  color={status === "Cancelado" ? "error" : "default"}
+                  label={statusOptions[status]}
+                  color={color}
                 />
               );
-            }
+            },
           },
           {
             field: "actions",
@@ -178,6 +179,20 @@ export const ScheduleCanceled = () => {
                 >
                   <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Servicio eliminado exitosamente de los cancelados
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedStatusSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedStatusSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedStatusSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio cancelado exitosamente
                   </Alert>
                 </Snackbar>
             

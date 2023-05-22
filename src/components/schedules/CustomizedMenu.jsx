@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from "react";
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -6,8 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
+import ScheduleContext from "../../Context/ScheduleContext";
 
 const StyledMenu = styled((props) => (
+    
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -49,6 +51,8 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function CustomizedMenu({ onHecho, onCancelado }) {
+  const { schedule } = useContext(ScheduleContext);
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

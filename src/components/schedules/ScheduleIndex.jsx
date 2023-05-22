@@ -14,12 +14,12 @@ import { HotKeys } from "react-hotkeys";
 import CustomizedMenu from "./CustomizedMenu";
 
 export const ScheduleIndex = () => {
-    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
+    const { schedules, getSchedules, updateStatus, deleteSchedule, paymentOptions, statusOptions, statusColors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, []);
 
-    const pendingSchedules = schedules.filter(schedule => schedule.status !== "Hecho" && schedule.status !== "Cancelado");
+    const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Pendiente');
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -128,10 +128,11 @@ export const ScheduleIndex = () => {
         flex: 0.8,
         renderCell: (params) => {
           const { status } = params.row;
+          const color = statusColors[status] || "default"; 
           return (
             <Chip
-              label={status}
-              color={status === "Pendiente" ? "warning" : "default"}
+              label={statusOptions[status]}
+              color={color}
             />
           );
         },
@@ -158,7 +159,10 @@ export const ScheduleIndex = () => {
             </Button>
             
             <AlertDialog onDelete={() => handleDelete(params.row.id)} />
-            <CustomizedMenu />
+              <CustomizedMenu
+                onHecho={() => updateStatus(params.row.id, 2)}
+                onCancelado={() => updateStatus(params.row.id, 3)}
+              />
           </>
         ),
       },

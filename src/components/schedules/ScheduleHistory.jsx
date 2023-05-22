@@ -9,12 +9,13 @@ import Header from "../../components/Header";
 import AlertDialog from "../../components/AlertDialog";
 
 export const ScheduleHistory = () => {
-    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleClick, deletedSnackbar, setDeletedSnackbar, } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions, statusOptions, statusColors, handleClick, deletedSnackbar, setDeletedSnackbar, updatedStatusSnackbar, handleUpdatedStatusSnackbarClose } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, [])
 
-    const pendingSchedules = schedules.filter(schedule => schedule.status !== "Pendiente" && schedule.status !== "Cancelado");
+    const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Hecho');
+
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -78,16 +79,17 @@ export const ScheduleHistory = () => {
           {
             field: "status",
             headerName: "Estado",
-            flex: 1,
+            flex: 0.8,
             renderCell: (params) => {
               const { status } = params.row;
+              const color = statusColors[status] || "default"; 
               return (
                 <Chip
-                  label={status}
-                  color={status === "Hecho" ? "success" : "default"}
+                  label={statusOptions[status]}
+                  color={color}
                 />
               );
-            }
+            },
           },
           {
             field: "actions",
@@ -177,6 +179,20 @@ export const ScheduleHistory = () => {
                 >
                   <Alert onClose={() => setDeletedSnackbar(false)} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Servicio eliminado exitosamente del historial
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={updatedStatusSnackbar}
+                  autoHideDuration={null} // Configura null para desactivar el tiempo de ocultamiento automático
+                  onClose={handleUpdatedStatusSnackbarClose}
+                  sx={{
+                    "& .MuiAlert-filledSuccess": {
+                      fontSize: "20px",
+                    },
+                  }}
+                >
+                  <Alert onClose={handleUpdatedStatusSnackbarClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                    Servicio completado exitosamente
                   </Alert>
                 </Snackbar>
             </Box>
