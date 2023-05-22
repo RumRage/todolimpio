@@ -11,7 +11,7 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import AlertDialog from "../../components/AlertDialog";
 import ScheduleCreateModal from "./ScheduleCreateModal";
 import { HotKeys } from "react-hotkeys";
-import CustomizedMenu from "./CustomizedMenu";
+import StatusOptions from "./StatusOptions";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, updateStatus, deleteSchedule, paymentOptions, statusOptions, statusColors, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
@@ -159,7 +159,7 @@ export const ScheduleIndex = () => {
             </Button>
             
             <AlertDialog onDelete={() => handleDelete(params.row.id)} />
-              <CustomizedMenu
+              <StatusOptions
                 onHecho={() => updateStatus(params.row.id, 2)}
                 onCancelado={() => updateStatus(params.row.id, 3)}
               />

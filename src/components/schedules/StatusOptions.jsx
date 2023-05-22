@@ -50,7 +50,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function CustomizedMenu({ onHecho, onCancelado }) {
+export default function StatusOptions({ onHecho, onCancelado }) {
   const { schedule } = useContext(ScheduleContext);
 
 
@@ -84,7 +84,6 @@ export default function CustomizedMenu({ onHecho, onCancelado }) {
         },
       }} 
     >
-      Estado
     </Button>
     <StyledMenu
       id="demo-customized-menu"
@@ -95,10 +94,20 @@ export default function CustomizedMenu({ onHecho, onCancelado }) {
       open={open}
       onClose={handleClose}
     >
-       <MenuItem onClick={onHecho} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'success.main' }}>
+       <MenuItem onClick={onHecho} disableRipple 
+        sx={{ backgroundColor: 'success.main',  
+        color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+        "&:hover": {
+          backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+        }, }}>
           Hecho
         </MenuItem>
-        <MenuItem onClick={onCancelado} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'error.main' }}>
+        <MenuItem onClick={onCancelado} disableRipple 
+        sx={{ backgroundColor: 'error.main',
+        color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+        "&:hover": {
+          backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+        }, }}>
           Cancelado
         </MenuItem>
       </StyledMenu>
