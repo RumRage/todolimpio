@@ -9,6 +9,7 @@ import { DisposableProvider } from './Context/DisposableContext';
 import { ServiceProvider } from './Context/ServiceContext';
 import { ComboProvider } from './Context/ComboContext';
 import { ScheduleProvider } from './Context/ScheduleContext';
+import { DashboardProvider } from './Context/DashboardContext';
 
 import { CategoryIndex } from './components/categories/CategoryIndex';
 import { CategoryCreate } from './components/categories/CategoryCreate';
@@ -55,7 +56,17 @@ function App() {
           <main className="content">
              <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+
+            <Route
+               path="*"
+              element={
+                <DashboardProvider>
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                  </Routes>
+                </DashboardProvider>
+              }
+            />
               <Route
               path="/categories/*"
               element={
