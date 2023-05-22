@@ -11,6 +11,7 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import AlertDialog from "../../components/AlertDialog";
 import ScheduleCreateModal from "./ScheduleCreateModal";
 import { HotKeys } from "react-hotkeys";
+import CustomizedMenu from "./CustomizedMenu";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
@@ -82,84 +83,85 @@ export const ScheduleIndex = () => {
       };
     }, [handlers]);
 
-      const columns = [
-        { field: "id", headerName: "Id", flex: 0.5 },
-        { field: "name", headerName: "Nombre", flex: 1 },
-        { field: "tel", headerName: "Telefono", flex: 0.5 },
-        { field: "address", headerName: "Direccion", flex: 1 },
-        { field: "date_time", headerName: "Fecha", flex: 1 },
-        {
-            field: "combo_id",
-            headerName: "Servicio",
-            flex: 1,
-            valueGetter: (params) => {
-              const schedule = params.row;
-              return schedule.combos.map((combo) => combo.name).join(", ");
-            },
-          },
-        {
-            field: "price",
-            headerName: "Precio",
-            flex: 1,
-            renderCell: (params) => {
-              const { price, discount, total_price } = params.row;
-              return (
-                <div>
-                  <div>Precio: {price}</div>
-                  <div>Descuento: {discount}</div>
-                  <div>Precio total: {total_price}</div>
-                </div>
-              );
-            },
-          }, 
-          {
-            field: "payments",
-            headerName: "Metodo de pago",
-            flex: 1,
-            valueGetter: (params) => {
-              const { payments } = params.row;
-              return paymentOptions[payments];
-            },
-          },
-          {
-            field: "status",
-            headerName: "Estado",
-            flex: 1,
-            renderCell: (params) => {
-              const { status } = params.row;
-              return (
-                <Chip
-                  label={status}
-                  color={status === "Pendiente" ? "warning" : "default"}
-                />
-              );
-            },
-          },
-        {
-          field: "actions",
-          headerName: "Opciones",
-          flex: 1.5,
-          renderCell: (params) => (
-            <>
-              <Button
-                component={Link}
-                to={`/schedules/${params.row.id}/edit`}
-                variant="contained"
-                sx={{ 
-                  backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                  color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                  "&:hover": {
-                    backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                  },
-                }} 
-              >
-                <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-              </Button>
-
-              <AlertDialog onDelete={() => handleDelete(params.row.id)} />
-            </>
-          ),
+    const columns = [
+      { field: "id", headerName: "Id", flex: 0.5 },
+      { field: "name", headerName: "Nombre", flex: 1 },
+      { field: "tel", headerName: "Telefono", flex: 0.7 },
+      { field: "address", headerName: "Direccion", flex: 1 },
+      { field: "date_time", headerName: "Fecha", flex: 1 },
+      {
+        field: "combo_id",
+        headerName: "Servicio",
+        flex: 1,
+        valueGetter: (params) => {
+          const schedule = params.row;
+          return schedule.combos.map((combo) => combo.name).join(", ");
         },
+      },
+      {
+        field: "price",
+        headerName: "Precio",
+        flex: 1,
+        renderCell: (params) => {
+          const { price, discount, total_price } = params.row;
+          return (
+            <div>
+              <div>Precio: {price}</div>
+              <div>Descuento: {discount}</div>
+              <div>Precio total: {total_price}</div>
+            </div>
+          );
+        },
+      }, 
+      {
+        field: "payments",
+        headerName: "Metodo de pago",
+        flex: 1,
+        valueGetter: (params) => {
+          const { payments } = params.row;
+          return paymentOptions[payments];
+        },
+      },
+      {
+        field: "status",
+        headerName: "Estado",
+        flex: 0.8,
+        renderCell: (params) => {
+          const { status } = params.row;
+          return (
+            <Chip
+              label={status}
+              color={status === "Pendiente" ? "warning" : "default"}
+            />
+          );
+        },
+      },
+      {
+        field: "actions",
+        headerName: "Opciones",
+        flex: 1.7,
+        renderCell: (params) => (
+          <>
+            <Button
+              component={Link}
+              to={`/schedules/${params.row.id}/edit`}
+              variant="contained"
+              sx={{
+                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
+                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
+                "&:hover": {
+                  backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+                },
+              }}
+            >
+              <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
+            </Button>
+            
+            <AlertDialog onDelete={() => handleDelete(params.row.id)} />
+            <CustomizedMenu />
+          </>
+        ),
+      },
     ];
     
     
