@@ -254,7 +254,7 @@ export const ScheduleProvider = ({ children }) => {
       updateSchedule, 
       deleteSchedule, 
       setErrors, 
-      combos, 
+      combos,
       setCombos,
       MenuProps,
       payments,

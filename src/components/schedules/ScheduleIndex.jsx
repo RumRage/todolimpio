@@ -14,7 +14,7 @@ import { HotKeys } from "react-hotkeys";
 import CustomizedMenu from "./CustomizedMenu";
 
 export const ScheduleIndex = () => {
-    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
+    const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
     }, []);
