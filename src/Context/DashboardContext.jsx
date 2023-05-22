@@ -7,7 +7,6 @@ axios.defaults.baseURL = "http://127.0.0.1:8000/api/v1/";
 const DashboardContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
-
    
   //PRODUCTS
   const [products, setProducts] = useState([]);
@@ -31,7 +30,52 @@ export const DashboardProvider = ({ children }) => {
     calculateTotalProduct(); 
   }, [products]);
 
- 
+  //Disposable
+
+  const [disposables, setDisposables] = useState([]);
+  const [totalDisposable, setTotalDisposable] = useState(0);
+
+  const calculateTotalDisposable = () => {
+    const total = disposables.length;
+    setTotalDisposable(total);
+  };
+
+  const getDisposables = async () => {
+    const apiDisposables = await axios.get("disposables");
+    setDisposables(apiDisposables.data.data);
+    };
+
+    useEffect(() => {
+        getDisposables();
+      }, []);
+    
+      useEffect(() => {
+        calculateTotalDisposable(); 
+      }, [disposables]);
+    
+    //Categories
+
+    const [categories, setCategories] = useState([]);
+    const [totalCategory, setTotalCategory] = useState(0);
+
+    const calculateTotalCategory = () => {
+        const total = categories.length;
+        setTotalCategory(total);
+    };
+
+    const getCategories = async () => {
+        const apiCategories = await axios.get("categories");
+        setCategories(apiCategories.data.data);
+    };
+
+    useEffect(() => {
+        getCategories();
+      }, []);
+    
+      useEffect(() => {
+        calculateTotalCategory(); 
+      }, [categories]);
+
 
   
   return (
@@ -42,7 +86,18 @@ export const DashboardProvider = ({ children }) => {
       products,
       getProducts,
       totalProduct,
-      calculateTotalProduct
+      calculateTotalProduct,
+      //Disposables
+      disposables,
+      getDisposables,
+      totalDisposable,
+      calculateTotalDisposable,
+      //Categories
+      categories,
+      getCategories,
+      totalCategory,
+      calculateTotalCategory
+
     }}>{children}
     </DashboardContext.Provider>
   );

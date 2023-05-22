@@ -1,4 +1,5 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
@@ -15,15 +16,25 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  
+
   const {  
-      getProducts,
-      totalProduct
+      totalProduct,
+      totalDisposable,
+      totalCategory
      } = useContext(DashboardContext);
 
+     //Products
 
-    useEffect(() => {
-    getProducts();
-    }, []);
+    const navigateToProducts = useNavigate();
+
+    //Disposables      
+  
+      const navigateToDisposables = useNavigate();
+
+    //Categories
+
+    const navigateToCategories = useNavigate();
 
   return (
     <Box m="20px">
@@ -62,6 +73,8 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToProducts("/products")}
         >
           <StatBox
             title={totalProduct.toString()}
@@ -80,9 +93,11 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToDisposables("/disposables")}
         >
           <StatBox
-            title="4"
+            title={totalDisposable.toString()}
             subtitle="Descartables"
             increase="Descartables en sistema"
             icon={
@@ -98,9 +113,11 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToCategories("/categories")}
         >
           <StatBox
-            title="7"
+            title={totalCategory.toString()}
             subtitle="Categorias"
             increase="Categorias en sistema"
             icon={
