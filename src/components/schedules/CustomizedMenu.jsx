@@ -8,7 +8,6 @@ import { Chip } from '@mui/material';
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
-
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -64,14 +63,6 @@ export default function CustomizedMenu({ onHecho, onCancelado }) {
     setAnchorEl(null);
   };
 
-  const handleDoneClick = () => {
-    onUpdateStatus(schedule.id, "Hecho");
-  };
-
-  const handleCancelClick = () => {
-    onUpdateStatus(schedule.id, "Cancelado");
-  };
-
   return (
     <div>
     <Button
@@ -101,10 +92,10 @@ export default function CustomizedMenu({ onHecho, onCancelado }) {
       open={open}
       onClose={handleClose}
     >
-       <MenuItem onClick={handleDoneClick} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'success.main' }}>
+       <MenuItem onClick={onHecho} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'success.main' }}>
           Hecho
         </MenuItem>
-        <MenuItem onClick={handleCancelClick} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'error.main' }}>
+        <MenuItem onClick={onCancelado} disableRipple sx={{ color: '#FFFFFF', backgroundColor: 'error.main' }}>
           Cancelado
         </MenuItem>
       </StyledMenu>
