@@ -16,10 +16,8 @@ const Dashboard = () => {
   const colors = tokens(theme.palette.mode);
 
   const {  
-      products,
       getProducts,
-      totalProduct,
-      calculateTotalProduct
+      totalProduct
      } = useContext(DashboardContext);
 
 
