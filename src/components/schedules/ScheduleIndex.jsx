@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import ScheduleContext from "../../Context/ScheduleContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -11,13 +11,12 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import AlertDialog from "../../components/AlertDialog";
 import ScheduleCreateModal from "./ScheduleCreateModal";
 import { HotKeys } from "react-hotkeys";
-import EditButton from "./EditButton";
 
 export const ScheduleIndex = () => {
     const { schedules, getSchedules, deleteSchedule, paymentOptions, handleSnackbarClose, openSnackbar, setOpenSnackbar, deletedSnackbar, setDeletedSnackbar, updatedSnackbar, setUpdatedSnackbar, handleUpdatedSnackbarClose, handleClick } = useContext(ScheduleContext);
     useEffect(() => {
     getSchedules();
-    }, [])
+    }, []);
 
     const pendingSchedules = schedules.filter(schedule => schedule.status !== "Hecho" && schedule.status !== "Cancelado");
 
@@ -156,7 +155,6 @@ export const ScheduleIndex = () => {
               >
                 <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
               </Button>
-              <EditButton scheduleId={params.row.id} />
 
               <AlertDialog onDelete={() => handleDelete(params.row.id)} />
             </>
