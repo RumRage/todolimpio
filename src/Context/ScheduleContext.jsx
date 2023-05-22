@@ -263,7 +263,7 @@ export const ScheduleProvider = ({ children }) => {
         navigate("/schedules"); // Redirigir a la pestaña de agenda por defecto
       }
 
-      setUpdatedSnackbar(true); // Estado de la agenda actualizado exitosamente
+      setUpdatedStatusSnackbar(true); // Estado de la agenda actualizado exitosamente
     } catch (error) {
       // Manejar errores
     }
