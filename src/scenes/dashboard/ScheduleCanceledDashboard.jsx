@@ -6,7 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import DashboardContext from "../../Context/DashboardContext";
 
-export default function ScheduleDashboard() {
+export default function ScheduleCanceledDashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -17,7 +17,7 @@ export default function ScheduleDashboard() {
     statusColors,
    } = useContext(DashboardContext);
 
-   const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Pendiente');
+   const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Cancelado');
 
    const columns = [
     { field: "id", headerName: "Id", flex: 0.5 },
@@ -32,30 +32,6 @@ export default function ScheduleDashboard() {
       valueGetter: (params) => {
         const schedule = params.row;
         return schedule.combos.map((combo) => combo.name).join(", ");
-      },
-    },
-    {
-      field: "price",
-      headerName: "Precio",
-      flex: 1,
-      renderCell: (params) => {
-        const { price, discount, total_price } = params.row;
-        return (
-          <div>
-            <div>Precio: {price}</div>
-            <div>Descuento: {discount}</div>
-            <div>Precio total: {total_price}</div>
-          </div>
-        );
-      },
-    }, 
-    {
-      field: "payments",
-      headerName: "Metodo de pago",
-      flex: 1,
-      valueGetter: (params) => {
-        const { payments } = params.row;
-        return paymentOptions[payments];
       },
     },
     {

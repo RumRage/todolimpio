@@ -9,11 +9,13 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+
 import DashboardContext from "../../Context/DashboardContext";
 import ScheduleDashboard from "./ScheduleDashboard";
+import ScheduleHistoryDashboard from "./ScheduleHistoryDashboard";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-//import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
-//import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -42,7 +44,14 @@ const Dashboard = () => {
     //Schedules
     
     const navigateToSchedules = useNavigate();
+
+    //SchedulesHistory
+
+    const navigateToSchedulesHistory = useNavigate();
+
+    //SchedulesCanceled
     
+    const navigateToSchedulesCanceled = useNavigate();
 
   return (
     <Box m="20px">
@@ -188,20 +197,33 @@ const Dashboard = () => {
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToSchedulesHistory("/schedules/History")}
         >
         <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
             colors={colors.grey[100]}
             p="15px"
           >
-            <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Historial de servicios
+            <Typography color={colors.greenAccent[500]} variant="h3" fontWeight="600">
+              Historial de servicios completos
             </Typography>
+            <Box>
+              <IconButton>
+                <HistoryOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+            
           </Box>
+          <Box height="200px" m="10px 10px 0 10px">
           
+          <ScheduleHistoryDashboard />
+          
+          </Box>
             
         </Box>
 
@@ -215,6 +237,7 @@ const Dashboard = () => {
           <Typography variant="h5" fontWeight="600">
             Servicios
           </Typography>
+         
           <Box
             display="flex"
             flexDirection="column"

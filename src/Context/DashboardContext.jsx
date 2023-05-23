@@ -71,7 +71,7 @@ export const DashboardProvider = ({ children }) => {
         calculateTotalCategory(); 
       }, [categories]);
     
-    //Schedules
+    //Schedules 
 
     const [schedules, setSchedules] = useState([]);
     const [combos, setCombos] = useState([]);
@@ -116,9 +116,6 @@ export const DashboardProvider = ({ children }) => {
     }, []);
       
 
-    //SchedulesHistory
-
-    //SchedulesCanceled
 
     //Services
 
