@@ -89,7 +89,7 @@ export default function ComboCreateModal() {
           name="name"
           value={formValues["name"]}
           onChange={onChange}
-          sx={{ gridColumn: "span 4" }}
+          sx={{ gridColumn: "span 5" }}
           error={errors.name !== undefined}
           helperText={errors.name && errors.name[0]}
         />

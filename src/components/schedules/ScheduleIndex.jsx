@@ -143,26 +143,13 @@ export const ScheduleIndex = () => {
         flex: 1.7,
         renderCell: (params) => (
           <>
-            <Button
-              component={Link}
-              to={`/schedules/${params.row.id}/edit`}
-              variant="contained"
-              sx={{
-                backgroundColor: theme.palette.mode === 'dark' ? colors.blueAccent[700] : "#E6C7C2",
-                color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
-                "&:hover": {
-                  backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
-                },
-              }}
-            >
-              <ModeEditOutlineOutlinedIcon style={{ marginLeft: "auto", marginRight: "auto" }} /> 
-            </Button>
             
-            <AlertDialog onDelete={() => handleDelete(params.row.id)} />
-              <StatusOptions
+            <StatusOptions
                 onHecho={() => updateStatus(params.row.id, 2)}
                 onCancelado={() => updateStatus(params.row.id, 3)}
               />
+            <AlertDialog onDelete={() => handleDelete(params.row.id)} />
+             
           </>
         ),
       },
