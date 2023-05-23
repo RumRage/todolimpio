@@ -1,12 +1,18 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/v1/";
 
 const DashboardContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
+
+  useEffect(() => {
+    getProducts();
+    getDisposables();
+    getCategories();
+    getSchedules(); // Agregar esta línea
+  }, []);
    
   //PRODUCTS
   const [products, setProducts] = useState([]);
@@ -21,10 +27,6 @@ export const DashboardProvider = ({ children }) => {
     const apiProducts = await axios.get("products");
     setProducts(apiProducts.data.data);
   };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   useEffect(() => {
     calculateTotalProduct(); 
@@ -45,9 +47,6 @@ export const DashboardProvider = ({ children }) => {
     setDisposables(apiDisposables.data.data);
     };
 
-    useEffect(() => {
-        getDisposables();
-      }, []);
     
       useEffect(() => {
         calculateTotalDisposable(); 
@@ -68,14 +67,62 @@ export const DashboardProvider = ({ children }) => {
         setCategories(apiCategories.data.data);
     };
 
-    useEffect(() => {
-        getCategories();
-      }, []);
-    
       useEffect(() => {
         calculateTotalCategory(); 
       }, [categories]);
+    
+    //Schedules
 
+    const [schedules, setSchedules] = useState([]);
+    const [combos, setCombos] = useState([]);
+
+    const paymentOptions = {
+      1: 'A confirmar',
+      2: 'Efectivo',
+      3: 'Transferencia',
+    };
+  
+    const statusOptions = {
+      1: 'Pendiente',
+      2: 'Hecho',
+      3: 'Cancelado',
+    };
+
+    const statusColors = {
+      1: "warning",
+      2: "success",
+      3: "error",
+    };
+
+    const getSchedules = async () => {
+      const response = await axios.get("schedules?with=combos"); // Eager Loading
+      setSchedules(response.data.data);
+    };
+
+    useEffect(() => {
+      const fetchCombos = async () => {
+        try {
+          const response = await axios.get('/combos');
+          const fetchedCombos = response.data.data;
+          // Combinar los nuevos servicios con los existentes
+          const mergedCombos = [...combos, ...fetchedCombos];
+          setCombos(mergedCombos);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+      fetchCombos();
+    }, []);
+      
+
+    //SchedulesHistory
+
+    //SchedulesCanceled
+
+    //Services
+
+    //Combos
 
   
   return (
@@ -96,8 +143,16 @@ export const DashboardProvider = ({ children }) => {
       categories,
       getCategories,
       totalCategory,
-      calculateTotalCategory
-
+      calculateTotalCategory,
+      //Schedules
+      schedules, 
+      setSchedules,
+      combos, 
+      setCombos,
+      paymentOptions,
+      statusOptions,
+      statusColors,
+      getSchedules
     }}>{children}
     </DashboardContext.Provider>
   );

@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
@@ -11,6 +10,10 @@ import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import DashboardContext from "../../Context/DashboardContext";
+import ScheduleDashboard from "./ScheduleDashboard";
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+//import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+//import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -18,10 +21,10 @@ const Dashboard = () => {
 
   
 
-  const {  
-      totalProduct,
-      totalDisposable,
-      totalCategory
+  const {
+      totalProduct, //Product
+      totalDisposable, //Disposable
+      totalCategory, //Category     
      } = useContext(DashboardContext);
 
      //Products
@@ -36,26 +39,16 @@ const Dashboard = () => {
 
     const navigateToCategories = useNavigate();
 
+    //Schedules
+    
+    const navigateToSchedules = useNavigate();
+    
+
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Bienvenido al sistema de gestión de Todolimpio MDQ" />
-
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Descargar un reporte
-          </Button>
-        </Box>
       </Box>
       
 
@@ -151,10 +144,12 @@ const Dashboard = () => {
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToSchedules("/schedules")}
         >
           <Box
-            mt="25px"
-            p="0 30px"
+            mt="15px"
+            p="0 15px"
             display="flex "
             justifyContent="space-between"
             alignItems="center"
@@ -165,25 +160,28 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Servicios pendientes
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                AGENDA DE SERVICIOS EN CURSO
               </Typography>
             </Box>
             <Box>
               <IconButton>
-                <DownloadOutlinedIcon
+                <CalendarMonthOutlinedIcon
                   sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
                 />
               </IconButton>
             </Box>
+            
           </Box>
-          
+          <Box height="200px" m="10px 10px 0 10px">
+          <ScheduleDashboard />
+          </Box>         
         </Box>
         <Box
           gridColumn="span 4"
@@ -200,7 +198,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Historial de servicios
             </Typography>
           </Box>
           
@@ -215,7 +213,7 @@ const Dashboard = () => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Campaign
+            Servicios
           </Typography>
           <Box
             display="flex"
@@ -244,7 +242,7 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ padding: "30px 30px 0 30px" }}
           >
-            Sales Quantity
+            Combos
           </Typography>
           <Box height="250px" mt="-20px">
             
@@ -261,7 +259,7 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Geography Based Traffic
+           Servicios cancelados
           </Typography>
           <Box height="200px">
             

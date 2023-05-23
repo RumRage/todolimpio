@@ -174,21 +174,6 @@ export const ScheduleProvider = ({ children }) => {
     }));
   };
 
-  useEffect(() => {
-    const fetchCombos = async () => {
-      try {
-        const response = await axios.get('/combos');
-        const fetchedCombos = response.data.data;
-        // Combinar los nuevos servicios con los existentes
-        const mergedCombos = [...combos, ...fetchedCombos];
-        setCombos(mergedCombos);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCombos();
-  }, []);
 
   const refreshIndex = () => {
     window.location.reload();
