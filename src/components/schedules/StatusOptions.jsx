@@ -84,6 +84,7 @@ export default function StatusOptions({ onHecho, onCancelado }) {
         },
       }} 
     >
+      Estado
     </Button>
     <StyledMenu
       id="demo-customized-menu"
@@ -98,17 +99,17 @@ export default function StatusOptions({ onHecho, onCancelado }) {
         sx={{ backgroundColor: 'success.main',  
         color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
         "&:hover": {
-          backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+          backgroundColor: theme.palette.mode === 'dark' ? "#11c752" : "#11c752",
         }, }}>
-          Hecho
+         Marcar como Hecho
         </MenuItem>
         <MenuItem onClick={onCancelado} disableRipple 
         sx={{ backgroundColor: 'error.main',
         color: theme.palette.mode === 'dark' ? colors.grey[700] : colors.primary[100],
         "&:hover": {
-          backgroundColor: theme.palette.mode === 'dark' ? "#A5917B" : "#AE5671", 
+          backgroundColor: theme.palette.mode === 'dark' ? "#ea2b1a" : "#ea2b1a", 
         }, }}>
-          Cancelado
+          Marcar como Cancelado
         </MenuItem>
       </StyledMenu>
     </div>
