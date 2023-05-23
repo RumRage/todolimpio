@@ -9,10 +9,10 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
-
 import DashboardContext from "../../Context/DashboardContext";
 import ScheduleDashboard from "./ScheduleDashboard";
 import ScheduleHistoryDashboard from "./ScheduleHistoryDashboard";
+import ScheduleCanceledDashboard from "./ScheduleCanceledDashboard";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
@@ -20,8 +20,6 @@ import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  
 
   const {
       totalProduct, //Product
@@ -207,6 +205,13 @@ const Dashboard = () => {
             colors={colors.grey[100]}
             p="15px"
           >
+            <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Servicios completos
+              </Typography>
             <Typography color={colors.greenAccent[500]} variant="h3" fontWeight="600">
               Historial de servicios completos
             </Typography>
@@ -271,21 +276,46 @@ const Dashboard = () => {
             
           </Box>
         </Box>
+
         <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          padding="30px"
+          overflow="auto"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToSchedulesCanceled("/schedules/Canceled")}
         >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
+        <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            colors={colors.grey[100]}
+            p="15px"
           >
-           Servicios cancelados
-          </Typography>
-          <Box height="200px">
+            <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Servicios cancelados
+              </Typography>
+            <Typography color={colors.greenAccent[500]} variant="h3" fontWeight="600">
+            Historial de servicios cancelados
+            </Typography>
+            <Box>
+               <IconButton>
+                <EventBusyOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
             
+        </Box>
+
+        <Box height="200px" m="10px 10px 0 10px">
+          
+          <ScheduleCanceledDashboard />
+          
           </Box>
         </Box>
       </Box>

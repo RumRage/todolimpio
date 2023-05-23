@@ -20,10 +20,8 @@ export default function ScheduleCanceledDashboard() {
    const pendingSchedules = schedules.filter(schedule => statusOptions[schedule.status] === 'Cancelado');
 
    const columns = [
-    { field: "id", headerName: "Id", flex: 0.5 },
-    { field: "name", headerName: "Nombre", flex: 1 },
+    { field: "name", headerName: "Nombre", flex: 0.6 },
     { field: "tel", headerName: "Telefono", flex: 0.7 },
-    { field: "address", headerName: "Direccion", flex: 1 },
     { field: "date_time", headerName: "Fecha", flex: 1 },
     {
       field: "combo_id",
