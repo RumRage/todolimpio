@@ -8,14 +8,19 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
 import DashboardContext from "../../Context/DashboardContext";
 import ScheduleDashboard from "./ScheduleDashboard";
 import ScheduleHistoryDashboard from "./ScheduleHistoryDashboard";
 import ScheduleCanceledDashboard from "./ScheduleCanceledDashboard";
+import ServiceDashboard from "./ServiceDashboard";
+import ComboDashboard from "./ComboDashboard";
+
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+import AirportShuttleOutlinedIcon from '@mui/icons-material/AirportShuttleOutlined';
+import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
+
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -24,32 +29,19 @@ const Dashboard = () => {
   const {
       totalProduct, //Product
       totalDisposable, //Disposable
-      totalCategory, //Category     
+      totalCategory, //Category 
+      totalService, //Service 
+      totalCombo //Combo  
      } = useContext(DashboardContext);
 
-     //Products
-
-    const navigateToProducts = useNavigate();
-
-    //Disposables      
-  
-      const navigateToDisposables = useNavigate();
-
-    //Categories
-
-    const navigateToCategories = useNavigate();
-
-    //Schedules
-    
-    const navigateToSchedules = useNavigate();
-
-    //SchedulesHistory
-
-    const navigateToSchedulesHistory = useNavigate();
-
-    //SchedulesCanceled
-    
-    const navigateToSchedulesCanceled = useNavigate();
+    const navigateToProducts = useNavigate(); //Products
+    const navigateToDisposables = useNavigate(); //Disposables 
+    const navigateToCategories = useNavigate(); //Categories
+    const navigateToSchedules = useNavigate(); //Schedules
+    const navigateToSchedulesHistory = useNavigate(); //SchedulesHistory
+    const navigateToSchedulesCanceled = useNavigate(); //SchedulesCanceled   
+    const navigateToServices = useNavigate();  //Services
+    const navigateToCombos = useNavigate(); //Combos
 
   return (
     <Box m="20px">
@@ -59,7 +51,7 @@ const Dashboard = () => {
       </Box>
       
 
-      {/* GRID & CHARTS */}
+      {/* GRIDS */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -237,46 +229,74 @@ const Dashboard = () => {
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          p="30px"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToServices("/services")}
         >
-          <Typography variant="h5" fontWeight="600">
-            Servicios
-          </Typography>
-         
-          <Box
+          
+        <Box
             display="flex"
-            flexDirection="column"
+            justifyContent="space-between"
             alignItems="center"
-            mt="25px"
+            colors={colors.grey[100]}
+            p="5px"
           >
-            <ProgressCircle size="125" />
-            <Typography
-              variant="h5"
-              color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
-            >
-              $48,352 revenue generated
-            </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
+            <StatBox
+            title={totalService.toString()}
+            subtitle="Servicios"
+            increase="Servicios que hacemos"
+          />
+           
+           <Box>
+            <IconButton>
+                <AirportShuttleOutlinedIcon
+                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              </IconButton>
+            </Box>
+            </Box>
+            <Box height="200px" m="10px 10px 0 10px">
+          
+          <ServiceDashboard />
+          
           </Box>
         </Box>
+        
         <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigateToCombos("/combos")}
         >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
+          
+        <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            colors={colors.grey[100]}
+            p="5px"
           >
-            Combos
-          </Typography>
-          <Box height="250px" mt="-20px">
-            
+            <StatBox
+            title={totalCombo.toString()}
+            subtitle="Combos"
+            increase="Combos y ofertas en sistema"
+          />
+           
+           <Box>
+            <IconButton>
+                <SellOutlinedIcon
+                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              </IconButton>
+            </Box>
+            </Box>
+            <Box height="200px" m="10px 10px 0 10px">
+          
+          <ComboDashboard />
+          
           </Box>
         </Box>
-
+      
         <Box
           gridColumn="span 4"
           gridRow="span 2"

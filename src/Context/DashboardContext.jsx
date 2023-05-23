@@ -11,7 +11,9 @@ export const DashboardProvider = ({ children }) => {
     getProducts();
     getDisposables();
     getCategories();
-    getSchedules(); // Agregar esta línea
+    getSchedules();
+    getServices();
+    getCombos();
   }, []);
    
   //PRODUCTS
@@ -74,7 +76,6 @@ export const DashboardProvider = ({ children }) => {
     //Schedules 
 
     const [schedules, setSchedules] = useState([]);
-    const [combos, setCombos] = useState([]);
 
     const paymentOptions = {
       1: 'A confirmar',
@@ -115,12 +116,44 @@ export const DashboardProvider = ({ children }) => {
       fetchCombos();
     }, []);
       
-
-
     //Services
 
-    //Combos
+    const [services, setServices] = useState([]);
+    const [totalService, setTotalService] = useState(0);
 
+    const calculateTotalService = () => {
+        const total = services.length;
+        setTotalService(total);
+    };
+
+    const getServices = async () => {
+      const apiServices = await axios.get("services");
+      setServices(apiServices.data.data);
+      };
+
+      useEffect(() => {
+        calculateTotalService(); 
+      }, [services]);
+
+    //Combos
+    
+    const [combos, setCombos] = useState([]);
+    const [totalCombo, setTotalCombo] = useState(0);
+
+    const calculateTotalCombo = () => {
+      const total = combos.length;
+      setTotalCombo(total);
+    };
+
+    const getCombos = async () => {
+      const response = await axios.get("combos?with=services"); // Eager Loading
+      setCombos(response.data.data);
+    };
+
+
+    useEffect(() => {
+      calculateTotalCombo(); 
+    }, [combos]);
   
   return (
     <DashboardContext.Provider 
@@ -149,7 +182,19 @@ export const DashboardProvider = ({ children }) => {
       paymentOptions,
       statusOptions,
       statusColors,
-      getSchedules
+      getSchedules,
+      //Services
+      services,
+      getServices,
+      totalService,
+      calculateTotalService,
+      setServices,
+       //Combos
+       combos,
+       getCombos,
+       totalCombo,
+       calculateTotalCombo,
+       setCombos
     }}>{children}
     </DashboardContext.Provider>
   );
