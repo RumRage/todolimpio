@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/v1/";
+axios.defaults.baseURL = "https://todolimpio-api-53a8e9cc657e.herokuapp.com/api/v1/";
 
 const ComboContext = createContext();
 
