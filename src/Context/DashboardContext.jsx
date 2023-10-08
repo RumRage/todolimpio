@@ -1,9 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://egxmzwrpk0ntvwkm:zzd908u4ae743bnv@eanl4i1omny740jw.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ovp73xk5ickx2wo1";
-
-";
+axios.defaults.baseURL = "https://eanl4i1omny740jw.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306";
 
 const DashboardContext = createContext();
 
