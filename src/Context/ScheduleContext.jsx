@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = "https://eanl4i1omny740jw.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306";
 
-";
 
 const ScheduleContext = createContext();
 
