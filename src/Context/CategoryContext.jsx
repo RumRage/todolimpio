@@ -32,12 +32,12 @@ export const CategoryProvider = ({ children }) => {
     }
 
     const getCategories = async () => {
-      const apiCategories = await axios.get("v1/categories");
+      const apiCategories = await axios.get("/v1/categories");
       setCategories(apiCategories.data.data);
       };
 
     const getCategory = async (id) => {
-      const response = await axios.get("v1/categories/" + id);
+      const response = await axios.get("/v1/categories/" + id);
       const apiCategory = response.data.data
       setCategory(apiCategory);
       setFormValues({
@@ -58,7 +58,7 @@ export const CategoryProvider = ({ children }) => {
     const storeCategory = async (e) => {
         e.preventDefault();
             try{
-                await axios.post("v1/categories", formValues);
+                await axios.post("/v1/categories", formValues);
                 setFormValues(initialForm);
                 refreshIndex();
                 localStorage.setItem("categoryCreated", "true"); // Categoria creada exitosamente
@@ -78,7 +78,7 @@ export const CategoryProvider = ({ children }) => {
     const updateCategory = async (e) => {
         e.preventDefault();
             try{
-                await axios.put("v1/categories/" + category.id, formValues);
+                await axios.put("/v1/categories/" + category.id, formValues);
                 setFormValues(initialForm);
                 navigate("/categories");
                 setUpdatedSnackbar(true); // Categoria actualizada exitosamente
@@ -92,7 +92,7 @@ export const CategoryProvider = ({ children }) => {
     const [deletedSnackbar, setDeletedSnackbar] = useState(false);
 
     const deleteCategory = async (id) => {
-        await axios.delete("v1/categories/" + id);
+        await axios.delete("/v1/categories/" + id);
         getCategories();
     }
 
